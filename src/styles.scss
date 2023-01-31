@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.login-button {
+  color: white !important;
+  background: rgba(107, 33, 168, 0.5) !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@keyframes fadeIt {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.login-div {
+  background: linear-gradient(-45deg, white, whitesmoke);
+  background-size: 400% 400%;
+  animation: fadeIt 5s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+@keyframes spin_reverse {
+  0% {
+    rotate: 360deg;
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+.google-icon {
+  animation: spin 6s infinite 1s;
+}
+.github-icon {
+  animation: spin_reverse 6s infinite 1s;
+}

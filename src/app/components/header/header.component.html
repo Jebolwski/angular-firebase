@@ -1,0 +1,2 @@
+<div (click)="service.signOut()" *ngIf="service.user">Logout</div>
+<a routerLink="/login" *ngIf="!service.user">Login</a>
