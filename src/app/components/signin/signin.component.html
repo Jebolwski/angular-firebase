@@ -8,7 +8,7 @@
       [formGroup]="loginForm"
       (submit)="service.loginWithEmailPsw(loginForm.value)"
     >
-      <!-- Username -->
+      <!-- Email -->
       <div class="grid place-items-center">
         <div class="lg:w-3/4 w-full">
           <div class="flex">
@@ -18,6 +18,7 @@
           <input
             type="text"
             formControlName="email"
+            name="email"
             class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
           />
         </div>
@@ -31,6 +32,7 @@
           </div>
           <input
             type="password"
+            name="email"
             class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
             formControlName="password"
           />
@@ -74,6 +76,16 @@
             class="w-7 github-icon"
           />
         </button>
+      </div>
+      <!-- Dont have an account? -->
+      <div class="text-center font-light mt-4">
+        Dont have an account?
+        <a
+          routerLink="/signup"
+          class="fading-background p-[1px] rounded-md hover:shadow-lg duration-300 border border-blue-300 text-white"
+        >
+          Sign up
+        </a>
       </div>
     </form>
   </div>

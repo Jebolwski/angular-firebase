@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities; /* You can add global styles to this file, and also import other style files */
-
+@import "ngx-toastr/toastr";
 html,
 body {
   height: 100%;
@@ -37,8 +37,13 @@ body {
   }
 }
 
-.login-div {
-  background: linear-gradient(-45deg, white, whitesmoke);
+.fading-background {
+  background: linear-gradient(
+    -45deg,
+    rgb(128, 128, 255),
+    rgb(96, 165, 250),
+    rgb(147, 197, 253)
+  );
   background-size: 400% 400%;
   animation: fadeIt 5s ease-in-out infinite;
 }

@@ -1,2 +1,44 @@
-<div (click)="service.signOut()" *ngIf="service.user">Logout</div>
-<a routerLink="/login" *ngIf="!service.user">Login</a>
+<div
+  class="header bg-blue-900 p-3 text-white flex items-center justify-between shadow-md"
+>
+  <div>Warblogs</div>
+  <div class="flex items-center gap-1">
+    <!-- Profile Picture -->
+    <div *ngIf="service.user">
+      <img
+        src="{{ service.user.photoURL }}"
+        class="w-7 h-7 rounded-full"
+        *ngIf="service.user.photoURL"
+        matTooltip="{{ service.user.displayName }}"
+        alt="{{ service.user.displayName }}"
+      />
+      <img
+        src="http://www.channel4.com/media/images/Channel4/c4-news/2011/NOV/08/08_frazier_g_k.jpg"
+        *ngIf="!service.user.photoURL"
+        class="w-7 h-7 rounded-full"
+        matTooltip="{{ service.user.displayName }}"
+        alt="{{ service.user.displayName }}"
+      />
+    </div>
+
+    <!-- Logout -->
+    <button
+      (click)="service.signOut()"
+      matTooltip="Sign out"
+      matTooltipPosition="left"
+      class="bg-gradient-to-br from-blue-800 to-blue-700 grid place-items-center rounded-md p-[1px] cursor-pointer hover:shadow-md duration-200 border border-blue-800"
+      *ngIf="service.user"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+    <!-- Login -->
+    <a
+      routerLink="/signin"
+      *ngIf="!service.user"
+      matTooltip="Sign in"
+      matTooltipPosition="left"
+      class="bg-gradient-to-br grid place-items-center from-blue-800 to-blue-700 rounded-md p-[1px] cursor-pointer hover:shadow-md duration-200 border border-blue-800"
+      ><mat-icon>login</mat-icon>
+    </a>
+  </div>
+</div>
