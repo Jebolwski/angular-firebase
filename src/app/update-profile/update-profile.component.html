@@ -1,0 +1,78 @@
+<div class="m-5">
+  <div class="login-div border border-gray-200 rounded-md shadow-md p-4">
+    <div class="flex justify-center">
+      <div class="lg:w-3/4 w-full">
+        <h1 class="lg:text-xl text-blue-900 text-lg text-center font-semibold">
+          Update Profile
+        </h1>
+        <form
+          class="w-full mt-5"
+          [formGroup]="updateProfileForm"
+          (submit)="
+            username?.errors || photoURL?.errors
+              ? null
+              : authservice.updateProfile(updateProfileForm.value)
+          "
+        >
+          <!-- Display Name -->
+          <div>
+            <div class="flex">
+              <mat-icon>person</mat-icon>
+              <p>Username</p>
+            </div>
+            <input
+              type="text"
+              [ngClass]="
+                username?.errors && username?.touched ? 'border-red-500' : ''
+              "
+              formControlName="username"
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+            />
+          </div>
+          <app-error-message
+            name="username"
+            [max]="50"
+            [min]="3"
+            [form]="updateProfileForm"
+            [email]="false"
+            [required]="true"
+          ></app-error-message>
+
+          <!-- PhotoURL -->
+          <div>
+            <div class="flex">
+              <mat-icon>photo_camera</mat-icon>
+              <p>Profile Picture</p>
+            </div>
+            <input
+              type="text"
+              formControlName="photoURL"
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+            />
+          </div>
+          <app-error-message
+            name="photoURL"
+            [max]="150"
+            [min]="5"
+            [form]="updateProfileForm"
+            [email]="false"
+            [required]="false"
+          ></app-error-message>
+
+          <!-- Signup -->
+          <div class="flex justify-center mt-4">
+            <button
+              mat-stroked-button
+              class="w-3/4"
+              [ngClass]="
+                username?.errors || photoURL?.errors ? 'opacity-50' : ''
+              "
+            >
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

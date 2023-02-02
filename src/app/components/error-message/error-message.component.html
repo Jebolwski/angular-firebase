@@ -1,0 +1,26 @@
+<div class="min-h-[32px]">
+  <p
+    *ngIf="required && form.controls?.[name]?.errors?.['required'] && form.controls?.[name]?.touched"
+    class="text-red-500"
+  >
+    {{ name | titlecase }} is required 😥
+  </p>
+  <p
+    class="text-red-500"
+    *ngIf="form.controls?.[name]?.errors?.['maxlength'] && form.controls?.[name]?.touched"
+  >
+    Max length of {{ name | lowercase }} is {{ max }} characters 🤨
+  </p>
+  <p
+    class="text-red-500"
+    *ngIf="form.controls?.[name]?.errors?.['email'] && form.controls?.[name]?.touched"
+  >
+    This doesnt match email format 🤨
+  </p>
+  <p
+    class="text-red-500"
+    *ngIf="form.controls?.[name]?.errors?.['minlength'] && form.controls?.[name]?.touched"
+  >
+    Min length of {{ name | lowercase }} is {{ min }} characters 🤔
+  </p>
+</div>

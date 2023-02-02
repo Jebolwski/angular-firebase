@@ -6,7 +6,11 @@
     <form
       class="w-full mt-5"
       [formGroup]="loginForm"
-      (submit)="service.loginWithEmailPsw(loginForm.value)"
+      (submit)="
+        password?.errors || email?.errors
+          ? null
+          : service.loginWithEmailPsw(loginForm.value)
+      "
     >
       <!-- Email -->
       <div class="grid place-items-center">
@@ -40,7 +44,13 @@
       </div>
       <!-- Login -->
       <div class="flex justify-center mt-4">
-        <button mat-stroked-button class="w-3/4">Login</button>
+        <button
+          mat-stroked-button
+          class="w-3/4"
+          [ngClass]="password?.errors || email?.errors ? 'opacity-50' : ''"
+        >
+          Login
+        </button>
       </div>
       <!-- OR -->
       <div class="flex justify-center">
@@ -68,7 +78,7 @@
         </button>
         <!-- Github -->
         <button
-          (click)="service.loginWithGmail()"
+          (click)="service.loginWithGithub()"
           class="border-2 rounded-full border-gray-300 p-1"
         >
           <img

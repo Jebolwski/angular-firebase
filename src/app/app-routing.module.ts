@@ -4,6 +4,7 @@ import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthguardService as LoggedIn } from './services/authguard.service';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Login' },
@@ -18,6 +19,11 @@ const routes: Routes = [
     component: SignupComponent,
     title: 'Sign up • Warblogs',
     canActivate: [LoggedIn],
+  },
+  {
+    path: 'profile/:id/update',
+    component: UpdateProfileComponent,
+    title: 'Update Profile • Warblogs',
   },
 ];
 

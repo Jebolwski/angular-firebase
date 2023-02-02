@@ -1,110 +1,179 @@
 <div class="m-5">
   <div class="login-div border border-gray-200 rounded-md shadow-md p-4">
-    <h1 class="lg:text-xl text-blue-900 text-lg text-center font-semibold">
-      Login
-    </h1>
-    <form
-      class="w-full mt-5"
-      [formGroup]="signUpForm"
-      (submit)="service.signUp(signUpForm.value)"
-    >
-      <!-- Display Name -->
-      <div class="grid place-items-center">
-        <div class="lg:w-3/4 w-full">
-          <div class="flex">
-            <mat-icon>person</mat-icon>
-            <p>Username</p>
-          </div>
-          <input
-            type="text"
-            formControlName="displayName"
-            class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-          />
-        </div>
-      </div>
-      <!-- PhotoURL -->
-      <div class="grid place-items-center">
-        <div class="lg:w-3/4 w-full mt-4">
-          <div class="flex">
-            <mat-icon>photo_camera</mat-icon>
-            <p>Profile Picture</p>
-          </div>
-          <input
-            type="text"
-            formControlName="photoURL"
-            class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-          />
-        </div>
-      </div>
-      <!-- Email -->
-      <div class="grid place-items-center">
-        <div class="lg:w-3/4 w-full mt-4">
-          <div class="flex">
-            <mat-icon>mail_outline</mat-icon>
-            <p>Email</p>
-          </div>
-          <input
-            type="text"
-            formControlName="email"
-            class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-          />
-        </div>
-      </div>
-      <!-- Password -->
-      <div class="grid place-items-center">
-        <div class="lg:w-3/4 w-full">
-          <div class="flex mt-4">
-            <mat-icon>lock_outline</mat-icon>
-            <p>Password</p>
-          </div>
-          <input
-            type="password"
-            class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-            formControlName="password"
-          />
-        </div>
-      </div>
-      <!-- Password (Again) -->
-      <div class="grid place-items-center">
-        <div class="lg:w-3/4 w-full">
-          <div class="flex mt-4">
-            <mat-icon>lock_outline</mat-icon>
-            <p>Password</p>
-          </div>
-          <input
-            type="password"
-            class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-            formControlName="password"
-          />
-        </div>
-      </div>
-      <!-- Signup -->
-      <div class="flex justify-center mt-4">
-        <button mat-stroked-button class="w-3/4">Signup</button>
-      </div>
-      <!-- OR -->
-      <div class="flex justify-center">
-        <div
-          class="w-full lg:w-1/2 h-[2px] bg-gray-300 rounded-md mt-5 relative"
+    <div class="flex justify-center">
+      <div class="lg:w-3/4 w-full">
+        <h1 class="lg:text-xl text-blue-900 text-lg text-center font-semibold">
+          Login
+        </h1>
+        <form
+          class="w-full mt-5"
+          [formGroup]="signUpForm"
+          (submit)="
+            username?.errors ||
+            password?.errors ||
+            confirm?.errors ||
+            email?.errors ||
+            photoURL?.errors
+              ? null
+              : service.signUp(signUpForm.value)
+          "
         >
-          <div
-            class="w-8 h-8 border-2 bottom-0 bg-gray-300 translate-y-1/2 absolute right-1/2 translate-x-1/2 border-gray-300 grid place-items-center rounded-lg"
-          >
-            OR
+          <!-- Display Name -->
+          <div>
+            <div class="flex">
+              <mat-icon>person</mat-icon>
+              <p>Username</p>
+            </div>
+            <input
+              type="text"
+              [ngClass]="
+                username?.errors && username?.touched ? 'border-red-500' : ''
+              "
+              formControlName="username"
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+            />
           </div>
-        </div>
-      </div>
+          <app-error-message
+            name="username"
+            [max]="50"
+            [min]="3"
+            [form]="signUpForm"
+            [email]="false"
+            [required]="true"
+          ></app-error-message>
 
-      <!-- Already have an account? -->
-      <div class="text-center font-light mt-4">
-        Already have an account?
-        <a
-          routerLink="/signin"
-          class="fading-background p-[1px] rounded-md hover:shadow-lg duration-300 border border-blue-300 text-white"
-        >
-          Sign in
-        </a>
+          <!-- PhotoURL -->
+          <div>
+            <div class="flex">
+              <mat-icon>photo_camera</mat-icon>
+              <p>Profile Picture</p>
+            </div>
+            <input
+              type="text"
+              formControlName="photoURL"
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+            />
+          </div>
+          <app-error-message
+            name="photoURL"
+            [max]="150"
+            [min]="5"
+            [form]="signUpForm"
+            [email]="false"
+            [required]="false"
+          ></app-error-message>
+          <!-- Email -->
+          <div>
+            <div class="flex">
+              <mat-icon>mail_outline</mat-icon>
+              <p>Email</p>
+            </div>
+            <input
+              type="text"
+              formControlName="email"
+              [ngClass]="
+                email?.errors && email?.touched ? 'border-red-500' : ''
+              "
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+            />
+          </div>
+          <app-error-message
+            name="email"
+            [max]="40"
+            [min]="5"
+            [form]="signUpForm"
+            [email]="true"
+            [required]="true"
+          ></app-error-message>
+          <!-- Password -->
+          <div>
+            <div class="flex mt-4">
+              <mat-icon>lock_outline</mat-icon>
+              <p>Password</p>
+            </div>
+            <input
+              type="password"
+              [ngClass]="
+                password?.errors && password?.touched ? 'border-red-500' : ''
+              "
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+              formControlName="password"
+            />
+          </div>
+          <app-error-message
+            name="password"
+            [max]="40"
+            [min]="6"
+            [form]="signUpForm"
+            [email]="false"
+            [required]="true"
+          ></app-error-message>
+          <!-- Password (Again) -->
+          <div>
+            <div class="flex mt-4">
+              <mat-icon>lock_outline</mat-icon>
+              <p>Password</p>
+            </div>
+            <input
+              type="password"
+              [ngClass]="
+                confirm?.errors && confirm?.touched ? 'border-red-500' : ''
+              "
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+              formControlName="confirm"
+            />
+          </div>
+          <app-error-message
+            name="confirm"
+            [max]="40"
+            [min]="6"
+            [form]="signUpForm"
+            [email]="false"
+            [required]="true"
+          ></app-error-message>
+          <!-- Signup -->
+          <div class="flex justify-center mt-4">
+            <button
+              mat-stroked-button
+              class="w-3/4"
+              [ngClass]="
+                username?.errors ||
+                password?.errors ||
+                confirm?.errors ||
+                email?.errors ||
+                photoURL?.errors
+                  ? 'opacity-50'
+                  : ''
+              "
+            >
+              Signup
+            </button>
+          </div>
+          <!-- OR -->
+          <div class="flex justify-center">
+            <div
+              class="lg:w-3/4 w-full h-[2px] bg-gray-300 rounded-md mt-5 relative"
+            >
+              <div
+                class="w-8 h-8 border-2 bottom-0 bg-gray-300 translate-y-1/2 absolute right-1/2 translate-x-1/2 border-gray-300 grid place-items-center rounded-lg"
+              >
+                OR
+              </div>
+            </div>
+          </div>
+
+          <!-- Already have an account? -->
+          <div class="text-center font-light mt-5">
+            Already have an account?
+            <a
+              routerLink="/signin"
+              class="fading-background p-[2px] rounded-md hover:shadow-lg duration-300 border border-blue-300 text-white"
+            >
+              Sign in
+            </a>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </div>

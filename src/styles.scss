@@ -48,6 +48,17 @@ body {
   animation: fadeIt 5s ease-in-out infinite;
 }
 
+.fading-background-2 {
+  background: linear-gradient(
+    -45deg,
+    rgb(255, 255, 255),
+    rgb(240, 240, 240),
+    rgb(224, 224, 224)
+  );
+  background-size: 400% 400%;
+  animation: fadeIt 5s ease-in-out infinite;
+}
+
 @keyframes spin {
   0% {
     rotate: 0deg;
@@ -69,6 +80,7 @@ body {
 .google-icon {
   animation: spin 6s infinite 1s;
 }
+
 .github-icon {
   animation: spin_reverse 6s infinite 1s;
 }

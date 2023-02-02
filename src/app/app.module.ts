@@ -20,6 +20,12 @@ import { HomeComponent } from './components/home/home.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SignupComponent } from './components/signup/signup.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ProductComponent } from './components/product/product.component';
+import { NgImageSliderComponent } from 'ng-image-slider';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 @NgModule({
   declarations: [
@@ -28,6 +34,10 @@ import { ToastrModule } from 'ngx-toastr';
     HeaderComponent,
     HomeComponent,
     SignupComponent,
+    ErrorMessageComponent,
+    UpdateProfileComponent,
+    ProductsComponent,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,12 +52,14 @@ import { ToastrModule } from 'ngx-toastr';
     MatButtonModule,
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
+    NgImageSliderModule,
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
       closeButton: true,
       progressBar: true,
+      easing: '300',
     }),
   ],
   providers: [],

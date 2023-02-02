@@ -12,6 +12,7 @@ export class SignupComponent {
   signUpForm: FormGroup = new FormGroup({
     email: new FormControl('', [
       Validators.required,
+      Validators.email,
       Validators.minLength(5),
       Validators.maxLength(40),
     ]),
@@ -20,7 +21,7 @@ export class SignupComponent {
       Validators.minLength(6),
       Validators.maxLength(40),
     ]),
-    password_confirm: new FormControl('', [
+    confirm: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
       Validators.maxLength(40),
@@ -29,10 +30,26 @@ export class SignupComponent {
       Validators.minLength(5),
       Validators.maxLength(150),
     ]),
-    displayName: new FormControl('', [
+    username: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(50),
     ]),
   });
+
+  get email() {
+    return this.signUpForm.get('email');
+  }
+  get username() {
+    return this.signUpForm.get('username');
+  }
+  get password() {
+    return this.signUpForm.get('password');
+  }
+  get photoURL() {
+    return this.signUpForm.get('photoURL');
+  }
+  get confirm() {
+    return this.signUpForm.get('confirm');
+  }
 }

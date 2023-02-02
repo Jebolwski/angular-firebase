@@ -12,6 +12,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
+import { ProductService } from './services/product.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,29 +23,39 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authservice: AuthserviceService,
-    public firestore: Firestore
+    public firestore: Firestore,
+    private productservice: ProductService
   ) {}
-  getUser() {
-    console.log('messi');
-
-    const collectionRef = collection(this.firestore, 'users');
+  async getUser() {
     let user_q = query(
       collection(this.firestore, 'users'),
       where('uid', '==', this.authservice.user.uid)
     );
-    const unsubscribe = onSnapshot(user_q, (snapshot) => {
+    const unsubscribeUser = onSnapshot(user_q, (snapshot) => {
       snapshot.docs.map((data) => {
-        console.log('geldi');
-
         this.authservice.user.displayName = data.data()['displayName'];
         this.authservice.user.photoURL = data.data()['photoURL'];
         localStorage.setItem('user', JSON.stringify(this.authservice.user));
       });
     });
-    return unsubscribe;
+
+    return unsubscribeUser;
   }
+
+  async getProducts() {
+    let user_q = query(collection(this.firestore, 'products'));
+    const unsubscribeProducts = onSnapshot(user_q, (snapshot) => {
+      this.productservice.products = snapshot.docs.map((data) => {
+        console.log(data.data());
+        return { ...data.data() };
+      });
+    });
+
+    return unsubscribeProducts;
+  }
+
   ngOnInit(): void {
-    console.log(this.authservice.user);
     this.getUser();
+    this.getProducts();
   }
 }
