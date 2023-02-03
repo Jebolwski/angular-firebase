@@ -26,27 +26,11 @@ export class AppComponent implements OnInit {
     public firestore: Firestore,
     private productservice: ProductService
   ) {}
-  async getUser() {
-    let user_q = query(
-      collection(this.firestore, 'users'),
-      where('uid', '==', this.authservice.user.uid)
-    );
-    const unsubscribeUser = onSnapshot(user_q, (snapshot) => {
-      snapshot.docs.map((data) => {
-        this.authservice.user.displayName = data.data()['displayName'];
-        this.authservice.user.photoURL = data.data()['photoURL'];
-        localStorage.setItem('user', JSON.stringify(this.authservice.user));
-      });
-    });
-
-    return unsubscribeUser;
-  }
 
   async getProducts() {
     let user_q = query(collection(this.firestore, 'products'));
     const unsubscribeProducts = onSnapshot(user_q, (snapshot) => {
       this.productservice.products = snapshot.docs.map((data) => {
-        console.log(data.data());
         return { ...data.data() };
       });
     });
@@ -55,7 +39,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUser();
     this.getProducts();
   }
 }

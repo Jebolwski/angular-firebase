@@ -2,7 +2,12 @@
   class="flex items-center justify-around"
   *ngFor="let product of productservice.products"
 >
-  <div class="max-w-md min-w-[350px]">
-    <app-product [product]="product"></app-product>
+  <!-- Highlights -->
+  <div class="flex justify-around items-center">
+    <app-product
+      [product]="product"
+      class="md:w-64 w-1/2"
+      [extraclass]="'bg-white'"
+    ></app-product>
   </div>
 </div>

@@ -9,59 +9,11 @@
           class="w-full mt-5"
           [formGroup]="signUpForm"
           (submit)="
-            username?.errors ||
-            password?.errors ||
-            confirm?.errors ||
-            email?.errors ||
-            photoURL?.errors
+            password?.errors || confirm?.errors || email?.errors
               ? null
               : service.signUp(signUpForm.value)
           "
         >
-          <!-- Display Name -->
-          <div>
-            <div class="flex">
-              <mat-icon>person</mat-icon>
-              <p>Username</p>
-            </div>
-            <input
-              type="text"
-              [ngClass]="
-                username?.errors && username?.touched ? 'border-red-500' : ''
-              "
-              formControlName="username"
-              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-            />
-          </div>
-          <app-error-message
-            name="username"
-            [max]="50"
-            [min]="3"
-            [form]="signUpForm"
-            [email]="false"
-            [required]="true"
-          ></app-error-message>
-
-          <!-- PhotoURL -->
-          <div>
-            <div class="flex">
-              <mat-icon>photo_camera</mat-icon>
-              <p>Profile Picture</p>
-            </div>
-            <input
-              type="text"
-              formControlName="photoURL"
-              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-            />
-          </div>
-          <app-error-message
-            name="photoURL"
-            [max]="150"
-            [min]="5"
-            [form]="signUpForm"
-            [email]="false"
-            [required]="false"
-          ></app-error-message>
           <!-- Email -->
           <div>
             <div class="flex">
@@ -112,7 +64,7 @@
           <div>
             <div class="flex mt-4">
               <mat-icon>lock_outline</mat-icon>
-              <p>Password</p>
+              <p>Password (Again)</p>
             </div>
             <input
               type="password"
@@ -137,11 +89,7 @@
               mat-stroked-button
               class="w-3/4"
               [ngClass]="
-                username?.errors ||
-                password?.errors ||
-                confirm?.errors ||
-                email?.errors ||
-                photoURL?.errors
+                password?.errors || confirm?.errors || email?.errors
                   ? 'opacity-50'
                   : ''
               "
@@ -167,7 +115,7 @@
             Already have an account?
             <a
               routerLink="/signin"
-              class="fading-background p-[2px] rounded-md hover:shadow-lg duration-300 border border-blue-300 text-white"
+              class="fading-background p-[3px] rounded-md hover:shadow-lg duration-300 border border-blue-300 text-white"
             >
               Sign in
             </a>

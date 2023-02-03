@@ -10,12 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductComponent implements OnInit {
   @Input() product!: Product;
+  @Input() extraclass!: string;
 
-  photos: any = {};
-  arr: object[] = [];
-  ngOnInit(): void {
-    this.product.photos.forEach((photolink: string) => {
-      this.arr.push({ image: photolink });
-    });
-  }
+  ngOnInit(): void {}
 }

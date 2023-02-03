@@ -1,2 +1,22 @@
-<p>home works!</p>
-<app-products></app-products>
+<main class="p-3">
+  <!-- Highlights -->
+  <div
+    class="bg-gradient-to-tr from-stone-50 to-stone-100 rounded-md border border-stone-200 p-4 self-stretch"
+  >
+    <h2 class="text-black mb-3 text-lg">Highlights</h2>
+    <owl-carousel-o [options]="customOptions">
+      <ng-container
+        *ngFor="let product of productservice.products"
+        carouselSlide
+      >
+        <ng-template carouselSlide>
+          <app-product
+            [product]="product"
+            [extraclass]="'bg-white self-stretch'"
+            class="w-[30px]"
+          ></app-product>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</main>

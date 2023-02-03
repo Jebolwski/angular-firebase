@@ -29,7 +29,9 @@ export class AuthserviceService {
     public firestore: Firestore
   ) {}
 
-  user: any = JSON.parse(localStorage.getItem('user')!);
+  user: any = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user')!)
+    : null;
 
   async loginWithEmailPsw(data: {
     email: string;
@@ -40,22 +42,11 @@ export class AuthserviceService {
       .then(async (resp) => {
         localStorage.setItem('user', JSON.stringify(resp.user));
         this.user = JSON.parse(localStorage.getItem('user')!);
-
-        //TODO Getting user from firestore
-        let user_q = query(
-          collection(this.firestore, 'users'),
-          where('uid', '==', this.user.uid)
-        );
-        let getUser = await getDocs(user_q);
-        //TODO Putting displayName and photoURL to user
-        getUser.forEach((data) => {
-          this.user.displayName = data.data()['displayName'];
-          this.user.photoURL = data.data()['photoURL'];
-          localStorage.setItem('user', JSON.stringify(this.user));
-        });
-        await this.router.navigate(['/']);
+        this.router.navigate(['/']);
       })
       .catch((err) => {
+        this.user = undefined;
+        localStorage.removeItem('user');
         console.error(err, 'messi');
       });
   }

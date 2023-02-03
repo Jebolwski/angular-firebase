@@ -24,8 +24,14 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductComponent } from './components/product/product.component';
-import { NgImageSliderComponent } from 'ng-image-slider';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import player from 'lottie-web';
+
+export function playerFactory() {
+  return player;
+}
 
 @NgModule({
   declarations: [
@@ -38,6 +44,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
     UpdateProfileComponent,
     ProductsComponent,
     ProductComponent,
+    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +60,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
     NgImageSliderModule,
+    CarouselModule,
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-bottom-right',

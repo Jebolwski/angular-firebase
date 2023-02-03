@@ -27,7 +27,6 @@ export class ProductService {
     let productRef = collection(this.firebase, 'products');
     await addDoc(productRef, data)
       .then((resp) => {
-        console.log(resp);
         this.toastr.success('Successfully added product ✨');
         this.router.navigate(['/']);
       })
@@ -40,7 +39,6 @@ export class ProductService {
     let productRef = doc(this.firebase, 'products', id);
     await updateDoc(productRef, data)
       .then((resp) => {
-        console.log(resp);
         this.router.navigate(['/']);
         this.toastr.success('Successfully updated product 👍');
       })
@@ -53,7 +51,6 @@ export class ProductService {
     let productRef = doc(this.firebase, 'products', id);
     await deleteDoc(productRef)
       .then((resp) => {
-        console.log(resp);
         this.router.navigate(['/']);
         this.toastr.success('Successfully deleted product 👽');
       })

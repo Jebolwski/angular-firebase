@@ -12,90 +12,110 @@
           : service.loginWithEmailPsw(loginForm.value)
       "
     >
-      <!-- Email -->
-      <div class="grid place-items-center">
-        <div class="lg:w-3/4 w-full">
-          <div class="flex">
-            <mat-icon>mail_outline</mat-icon>
-            <p>Email</p>
-          </div>
-          <input
-            type="text"
-            formControlName="email"
-            name="email"
-            class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-          />
-        </div>
-      </div>
-      <!-- Password -->
-      <div class="grid place-items-center">
-        <div class="lg:w-3/4 w-full">
-          <div class="flex mt-4">
-            <mat-icon>lock_outline</mat-icon>
-            <p>Password</p>
-          </div>
-          <input
-            type="password"
-            name="email"
-            class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
-            formControlName="password"
-          />
-        </div>
-      </div>
-      <!-- Login -->
-      <div class="flex justify-center mt-4">
-        <button
-          mat-stroked-button
-          class="w-3/4"
-          [ngClass]="password?.errors || email?.errors ? 'opacity-50' : ''"
-        >
-          Login
-        </button>
-      </div>
-      <!-- OR -->
       <div class="flex justify-center">
-        <div
-          class="w-full lg:w-1/2 h-[2px] bg-gray-300 rounded-md mt-5 relative"
-        >
-          <div
-            class="w-8 h-8 border-2 bottom-0 bg-gray-300 translate-y-1/2 absolute right-1/2 translate-x-1/2 border-gray-300 grid place-items-center rounded-lg"
-          >
-            OR
+        <div class="lg:w-3/4 w-full">
+          <!-- Email -->
+          <div>
+            <div class="flex">
+              <mat-icon>mail_outline</mat-icon>
+              <p>Email</p>
+            </div>
+            <input
+              type="text"
+              formControlName="email"
+              [ngClass]="
+                email?.errors && email?.touched ? 'border-red-500' : ''
+              "
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+            />
+          </div>
+          <app-error-message
+            name="email"
+            [max]="40"
+            [min]="5"
+            [form]="loginForm"
+            [email]="true"
+            [required]="true"
+          ></app-error-message>
+          <!-- Password -->
+          <div>
+            <div class="flex mt-4">
+              <mat-icon>lock_outline</mat-icon>
+              <p>Password</p>
+            </div>
+            <input
+              type="password"
+              [ngClass]="
+                password?.errors && password?.touched ? 'border-red-500' : ''
+              "
+              class="bg-gradient-to-br from-gray-200 to-gray-300 text-blue-900 rounded-md w-full p-1 outline-none border"
+              formControlName="password"
+            />
+          </div>
+          <app-error-message
+            name="password"
+            [max]="40"
+            [min]="6"
+            [form]="loginForm"
+            [email]="false"
+            [required]="true"
+          ></app-error-message>
+          <!-- Login -->
+          <div class="flex justify-center mt-4">
+            <button
+              mat-stroked-button
+              class="w-3/4"
+              [ngClass]="password?.errors || email?.errors ? 'opacity-50' : ''"
+            >
+              Login
+            </button>
+          </div>
+          <!-- OR -->
+          <div class="flex justify-center">
+            <div
+              class="w-full lg:w-1/2 h-[2px] bg-gray-300 rounded-md mt-5 relative"
+            >
+              <div
+                class="w-8 h-8 border-2 bottom-0 bg-gray-300 translate-y-1/2 absolute right-1/2 translate-x-1/2 border-gray-300 grid place-items-center rounded-lg"
+              >
+                OR
+              </div>
+            </div>
+          </div>
+          <!-- Google and Github -->
+          <div class="flex justify-center mt-6 gap-4">
+            <!-- Google -->
+            <button
+              (click)="service.loginWithGmail()"
+              class="border-2 rounded-full border-gray-300 p-1"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+                class="w-7 google-icon"
+              />
+            </button>
+            <!-- Github -->
+            <button
+              (click)="service.loginWithGithub()"
+              class="border-2 rounded-full border-gray-300 p-1"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                class="w-7 github-icon"
+              />
+            </button>
+          </div>
+          <!-- Dont have an account? -->
+          <div class="text-center font-light mt-4">
+            Dont have an account?
+            <a
+              routerLink="/signup"
+              class="fading-background p-[3px] rounded-md hover:shadow-lg duration-300 border border-blue-300 text-white"
+            >
+              Sign up
+            </a>
           </div>
         </div>
-      </div>
-      <!-- Google and Github -->
-      <div class="flex justify-center mt-6 gap-4">
-        <!-- Google -->
-        <button
-          (click)="service.loginWithGmail()"
-          class="border-2 rounded-full border-gray-300 p-1"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
-            class="w-7 google-icon"
-          />
-        </button>
-        <!-- Github -->
-        <button
-          (click)="service.loginWithGithub()"
-          class="border-2 rounded-full border-gray-300 p-1"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-            class="w-7 github-icon"
-          />
-        </button>
-      </div>
-      <!-- Dont have an account? -->
-      <div class="text-center font-light mt-4">
-        Dont have an account?
-        <a
-          routerLink="/signup"
-          class="fading-background p-[1px] rounded-md hover:shadow-lg duration-300 border border-blue-300 text-white"
-        >
-          Sign up
-        </a>
       </div>
     </form>
   </div>

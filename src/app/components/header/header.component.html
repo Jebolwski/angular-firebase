@@ -1,35 +1,30 @@
 <div
   class="header bg-blue-900 p-3 text-white flex items-center justify-between shadow-md"
 >
-  <a routerLink="/">Warblogs</a>
+  <a routerLink="/"
+    ><img
+      src="https://cdn-icons-png.flaticon.com/512/2362/2362636.png"
+      alt="Shopify"
+      class="w-7"
+  /></a>
   <div class="flex items-center gap-1">
-    <!-- Edit Profile -->
-    <a
-      [routerLink]="'/profile/' + service.user.uid + '/update'"
-      *ngIf="service.user && !service.user?.providerData[0]?.displayName"
-      matTooltip="Update Profile"
-      matTooltipPosition="left"
-      class="flex items-center"
-    >
-      <mat-icon>manage_accounts_outline</mat-icon>
-    </a>
-
     <!-- Profile Picture -->
     <div *ngIf="service.user">
       <img
         src="{{ service.user.photoURL }}"
         class="w-7 h-7 rounded-full"
         *ngIf="service.user.photoURL"
-        matTooltip="{{ service.user.displayName | slice : 0 : 15 }}"
+        matTooltip="{{ service.user.email }}"
         matTooltipPosition="left"
       />
-      <img
-        src="http://www.channel4.com/media/images/Channel4/c4-news/2011/NOV/08/08_frazier_g_k.jpg"
+      <div
         *ngIf="!service.user.photoURL"
-        class="w-7 h-7 rounded-full"
-        matTooltip="{{ service.user.displayName | slice : 0 : 15 }}"
+        class="w-7 h-7 bg-stone-300 text-blue-500 font-semibold rounded-full grid place-content-center"
         matTooltipPosition="left"
-      />
+        matTooltip="{{ service.user.email }}"
+      >
+        {{ service.user.email | titlecase | slice : 0 : 1 }}
+      </div>
     </div>
 
     <!-- Logout -->
