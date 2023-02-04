@@ -1,10 +1,113 @@
 <main class="p-3">
+  <!-- Brands -->
+  <div class="my-8">
+    <owl-carousel-o [options]="brandsOptions">
+      <ng-container carouselSlide>
+        <ng-template carouselSlide>
+          <div class="grid place-content-center">
+            <div
+              class="text-center w-20 hover:text-blue-500 duration-200 font-medium"
+            >
+              <div
+                class="rounded-full text-center grid place-items-center border bg-white border-gray-400 hover:border-blue-500 duration-200 w-20 text-sm h-20 mb-2"
+              >
+                Senin için Seçtik
+              </div>
+              Sana Özel
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="grid place-content-center">
+            <div
+              class="text-center w-20 font-medium duration-200 hover:text-blue-500"
+            >
+              <div
+                class="rounded-full bg-orange-400 text-center grid place-items-center border text-black hover:text-black border-gray-400 hover:border-blue-500 duration-200 w-20 text-sm h-20 mb-2"
+              >
+                Çok Satanlar
+              </div>
+              Sen De Al!
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="grid place-content-center">
+            <div
+              class="text-center w-20 hover:text-blue-500 duration-200 font-medium"
+            >
+              <div
+                class="rounded-full bg-orange-400 text-center grid place-items-center border border-gray-400 hover:border-blue-500 duration-200 w-20 text-sm h-20 mb-2"
+              >
+                <img
+                  src="https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/automation/2023/1/26/Adidas_202301262144.png"
+                  class="rounded-full"
+                />
+              </div>
+              adidas
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="grid place-content-center">
+            <div
+              class="text-center w-20 hover:text-blue-500 duration-200 font-medium"
+            >
+              <div
+                class="rounded-full bg-orange-400 text-center grid place-items-center border border-gray-400 hover:border-blue-500 duration-200 w-20 text-sm h-20 mb-2"
+              >
+                <img
+                  src="https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/automation/2023/1/27/Defacto_202301270049.jpg"
+                  class="rounded-full"
+                />
+              </div>
+              DeFacto
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="grid place-content-center">
+            <div
+              class="text-center w-20 hover:text-blue-500 duration-200 font-medium"
+            >
+              <div
+                class="rounded-full bg-orange-400 text-center grid place-items-center border border-gray-400 hover:border-blue-500 duration-200 w-20 text-sm h-20 mb-2"
+              >
+                <img
+                  src="https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/automation/2023/1/27/Puma_202301271558.jpg"
+                  class="rounded-full"
+                />
+              </div>
+              Puma
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="grid place-content-center">
+            <div
+              class="text-center w-20 hover:text-blue-500 duration-200 font-medium"
+            >
+              <div
+                class="rounded-full bg-orange-400 text-center grid place-items-center border border-gray-400 hover:border-blue-500 duration-200 w-20 text-sm h-20 mb-2"
+              >
+                <img
+                  src="https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/automation/2023/1/27/Nike_202301271540.jpg"
+                  class="rounded-full"
+                />
+              </div>
+              Nike
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
   <!-- Highlights -->
   <div
     class="bg-gradient-to-tr from-stone-50 to-stone-100 rounded-md border border-stone-200 p-4 self-stretch"
   >
     <h2 class="text-black mb-3 text-lg">Highlights</h2>
-    <owl-carousel-o [options]="customOptions">
+    <owl-carousel-o [options]="highlightsOptions">
       <ng-container
         *ngFor="let product of productservice.products"
         carouselSlide

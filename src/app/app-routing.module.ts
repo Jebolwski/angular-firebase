@@ -7,23 +7,23 @@ import { AuthguardService as LoggedIn } from './services/authguard.service';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, title: 'Login' },
+  { path: '', component: HomeComponent, title: 'Home • Shopify' },
   {
     path: 'signin',
     component: SigninComponent,
-    title: 'Signin • Warblogs',
+    title: 'Signin • Shopify',
     canActivate: [LoggedIn],
   },
   {
     path: 'signup',
     component: SignupComponent,
-    title: 'Sign up • Warblogs',
+    title: 'Signup • Shopify',
     canActivate: [LoggedIn],
   },
   {
     path: 'profile/:id/update',
     component: UpdateProfileComponent,
-    title: 'Update Profile • Warblogs',
+    title: 'Update Profile • Shopify',
   },
 ];
 

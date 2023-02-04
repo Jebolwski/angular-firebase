@@ -10,8 +10,9 @@ import { ProductService } from 'src/app/services/product.service';
 export class HomeComponent {
   constructor(public productservice: ProductService) {}
 
-  customOptions: OwlOptions = {
+  highlightsOptions: OwlOptions = {
     loop: true,
+    center: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
@@ -20,7 +21,7 @@ export class HomeComponent {
     navText: ['', ''],
     responsive: {
       0: {
-        items: 2,
+        items: 1,
       },
       400: {
         items: 2,
@@ -30,6 +31,35 @@ export class HomeComponent {
       },
       1040: {
         items: 4,
+      },
+    },
+  };
+
+  brandsOptions: OwlOptions = {
+    loop: true,
+    startPosition: 'center',
+    autoplayHoverPause: false,
+    animateIn: true,
+    center: true,
+    responsiveRefreshRate: 200,
+    rewind: true,
+    autoplay: true,
+    mouseDrag: true,
+    touchDrag: true,
+    dots: false,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 2,
+      },
+      400: {
+        items: 3,
+      },
+      840: {
+        items: 4,
+      },
+      1040: {
+        items: 6,
       },
     },
   };

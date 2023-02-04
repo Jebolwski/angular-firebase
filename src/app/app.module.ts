@@ -28,6 +28,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import player from 'lottie-web';
+import { AddProductModalComponent } from './components/add-product-modal/add-product-modal.component';
 
 export function playerFactory() {
   return player;
@@ -45,6 +46,7 @@ export function playerFactory() {
     ProductsComponent,
     ProductComponent,
     ProductDetailComponent,
+    AddProductModalComponent,
   ],
   imports: [
     BrowserModule,
