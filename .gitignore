@@ -42,6 +42,10 @@ testem.log
 Thumbs.db
 
 # Firebase
+firebase-hosting-merge.yml
+firebase.json
+firestore.indexes.json
+firestore.rules
 .firebase
 *-debug.log
 .runtimeconfig.json
