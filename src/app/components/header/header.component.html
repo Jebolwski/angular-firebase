@@ -1,51 +1,249 @@
 <div
-  class="header bg-gradient-to-b from-blue-900 to-blue-800 p-3 border-b border-blue-800 text-white flex items-center justify-between shadow-lg rounded-b-lg"
+  class="header pt-1 border-b dark:border-stone-600 dark:text-white text-black dark:bg-stone-800"
 >
-  <a routerLink="/"
-    ><img
-      src="https://cdn-icons-png.flaticon.com/512/2362/2362636.png"
-      alt="Shopify"
-      class="w-7"
-  /></a>
-  <div class="flex items-center gap-1">
-    <!-- Profile Picture -->
-    <div *ngIf="service.user">
-      <img
-        src="{{ service.user.photoURL }}"
-        class="w-7 h-7 rounded-full"
-        *ngIf="service.user.photoURL"
-        matTooltip="{{ service.user.email }}"
-        matTooltipPosition="left"
-      />
-      <div
-        *ngIf="!service.user.photoURL"
-        class="w-7 h-7 bg-stone-300 text-blue-500 font-semibold rounded-full grid place-content-center"
-        matTooltipPosition="left"
-        matTooltip="{{ service.user.email }}"
-      >
-        {{ service.user.email | titlecase | slice : 0 : 1 }}
+  <div class="px-2 md:px-8 lg:px-[12rem]">
+    <!-- Small Screen Three Top -->
+    <div class="flex w-full md:hidden items-center justify-between">
+      <div class="flex gap-2 items-center">
+        <div>
+          <div
+            class="p-0 flex justify-center m-0 w-[24px] h-[24px] items-center"
+          >
+            <mat-icon class="w-[24px] h-[24px]">menu</mat-icon>
+          </div>
+          <p class="text-sm -mt-1">Menü</p>
+        </div>
+        <img
+          src="https://cdn.dsmcdn.com/web/logo/ty-web.svg"
+          alt="Shopify"
+          class="w-32"
+          [class.header-icon-reverse]="service.darkMode == 'true'"
+        />
       </div>
+      <div class="flex items-center justify-end gap-1 w-full">
+        <div>
+          <mat-icon>person</mat-icon>
+        </div>
+        <div>
+          <mat-icon>favorite</mat-icon>
+        </div>
+        <div>
+          <mat-icon>shopping_cart</mat-icon>
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div
+      class="md:flex items-center opacity-70 justify-end gap-4 text-xs hidden"
+    >
+      <p (click)="service.toggleDarkMode()">İndirim Kuponlarım</p>
+      <p>Trendyol'da Satış Yap</p>
+      <p>Yardım & Destek</p>
     </div>
 
-    <!-- Logout -->
-    <button
-      (click)="service.signOut()"
-      matTooltip="Signout"
-      matTooltipPosition="left"
-      class="bg-gradient-to-br from-blue-800 to-blue-700 grid place-items-center rounded-md p-[1px] cursor-pointer hover:shadow-md duration-200 border border-blue-800"
-      *ngIf="service.user"
+    <div
+      class="flex items-center justify-start md:justify-between gap-0 md:gap-8 mt-3"
     >
-      <mat-icon>logout</mat-icon>
-    </button>
+      <a routerLink="/"
+        ><img
+          src="https://cdn.dsmcdn.com/web/logo/ty-web.svg"
+          alt="Shopify"
+          class="w-32 hidden md:block"
+          [class.header-icon-reverse]="service.darkMode == 'true'"
+      /></a>
+      <div class="relative w-full md:w-1/2">
+        <input
+          type="text"
+          class="header-search-input focus:border-0 focus:outline-none rounded-md w-full dark:bg-stone-700 font-light text-sm bg-stone-100 pr-10"
+          placeholder="Aradığınız ürün, kategori veya markayı yazınız"
+        />
+        <mat-icon class="absolute right-1 top-[0.4rem] text-orange-500"
+          >search</mat-icon
+        >
+      </div>
+      <div class="items-center justify-between hidden md:flex">
+        <div class="flex items-center gap-5">
+          <div
+            class="flex items-center gap-[4px] cursor-pointer text-sm hover:text-orange-400"
+          >
+            <mat-icon class="duration-200 scale-[0.9]">person</mat-icon>
+            Hesabım
+          </div>
+          <div
+            class="flex items-center gap-[4px] cursor-pointer text-sm hover:text-orange-400"
+          >
+            <mat-icon class="duration-200 scale-[0.8]">favorite</mat-icon>
+            Favorilerim
+          </div>
+          <div
+            class="flex items-center gap-[4px] cursor-pointer text-sm hover:text-orange-400"
+          >
+            <mat-icon class="duration-200 scale-[0.8]">shopping_cart</mat-icon>
+            Sepetim
+          </div>
 
-    <!-- Login -->
-    <a
-      routerLink="/signin"
-      *ngIf="!service.user"
-      matTooltip="Signin"
-      matTooltipPosition="left"
-      class="bg-gradient-to-br grid place-items-center from-blue-800 to-blue-700 rounded-md p-[1px] cursor-pointer hover:shadow-md duration-200 border border-blue-800"
-      ><mat-icon>login</mat-icon>
-    </a>
+          <!-- Profile Picture -->
+          <!-- <div *ngIf="service.user">
+            <img
+              src="{{ service.user.photoURL }}"
+              class="w-7 h-7 rounded-full"
+              *ngIf="service.user.photoURL"
+              matTooltip="{{ service.user.email }}"
+              matTooltipPosition="left"
+            />
+            <div
+              *ngIf="!service.user.photoURL"
+              class="w-7 h-7 bg-stone-300 text-blue-500 font-semibold rounded-full grid place-content-center"
+              matTooltipPosition="left"
+              matTooltip="{{ service.user.email }}"
+            >
+              {{ service.user.email | titlecase | slice : 0 : 1 }}
+            </div>
+          </div> -->
+
+          <!-- Logout -->
+          <!-- <button
+            (click)="service.signOut()"
+            matTooltip="Signout"
+            matTooltipPosition="left"
+            class="bg-gradient-to-br from-blue-800 to-blue-700 grid place-items-center rounded-md p-[1px] cursor-pointer hover:shadow-md duration-200 border border-blue-800"
+            *ngIf="service.user"
+          >
+            <mat-icon>logout</mat-icon>
+          </button> -->
+
+          <!-- Login -->
+          <a
+            routerLink="/signin"
+            *ngIf="!service.user"
+            matTooltip="Signin"
+            matTooltipPosition="left"
+            class="bg-gradient-to-br grid place-items-center from-blue-800 to-blue-700 rounded-md p-[1px] cursor-pointer hover:shadow-md duration-200 border border-blue-800"
+            ><mat-icon>login</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- Large Screen Categories -->
+  <div
+    class="items-center justify-center text-xs mt-4 font-medium hidden md:flex"
+  >
+    <div
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 h-7 px-5 text-center"
+    >
+      KADIN
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 h-7 px-5 text-center"
+    >
+      ERKEK
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 h-7 px-5 text-center"
+    >
+      ANNE & ÇOCUK
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 h-7 px-5 text-center"
+    >
+      EV & MOBİLYA
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 h-7 px-5 text-center"
+    >
+      SÜPERMARKET
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 h-7 px-5 text-center"
+    >
+      KOZMETİK
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 border-b-orange-400 cursor-pointer whitespace-nowrap h-7 px-5 text-center"
+    >
+      AYAKKABI & ÇANTA
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 border-b-orange-400 cursor-pointer whitespace-nowrap h-7 px-5 text-center"
+    >
+      SAAT & AKSESUAR
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 border-b-orange-400 cursor-pointer whitespace-nowrap h-7 px-5 text-center"
+    >
+      ELEKTRONİK
+    </div>
+    <div
+      class="hover:border-b-2 hover:text-orange-400 border-b-orange-400 cursor-pointer whitespace-nowrap h-7 px-5 text-center"
+    >
+      SPOR & OUTDOOR
+    </div>
+  </div>
+  <!-- Small Screen Categories -->
+  <swiper
+    [config]="config"
+    class="categories-header flex md:hidden items-center justify-center text-xs mt-4 font-medium"
+  >
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      KADIN
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      ERKEK
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      ANNE & ÇOCUK
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      EV & MOBİLYA
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      SÜPERMARKET
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      KOZMETİK
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      AYAKKABI & ÇANTA
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      SAAT & AKSESUAR
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      ELEKTRONİK
+    </ng-template>
+    <ng-template
+      swiperSlide
+      class="hover:border-b-2 hover:text-orange-400 cursor-pointer whitespace-nowrap border-b-orange-400 text-clip px-5 text-center pb-3 w-full text-center"
+    >
+      SPOR & OUTDOOR
+    </ng-template>
+  </swiper>
 </div>

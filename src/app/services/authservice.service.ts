@@ -29,6 +29,8 @@ export class AuthserviceService {
     public firestore: Firestore
   ) {}
 
+  darkMode: string = 'false';
+
   user: any = localStorage.getItem('user')
     ? JSON.parse(localStorage.getItem('user')!)
     : null;
@@ -63,6 +65,16 @@ export class AuthserviceService {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  toggleDarkMode(): void {
+    if (this.darkMode == 'true') {
+      this.darkMode = 'false';
+      localStorage.setItem('theme', 'false');
+    } else {
+      this.darkMode = 'true';
+      localStorage.setItem('theme', 'true');
+    }
   }
 
   signUp(data: {

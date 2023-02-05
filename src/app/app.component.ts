@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   title = 'firebase-blog';
 
   constructor(
-    private authservice: AuthserviceService,
+    public authservice: AuthserviceService,
     public firestore: Firestore,
     private productservice: ProductService
   ) {}
@@ -40,5 +40,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
+    let theme = localStorage.getItem('theme');
+    this.authservice.toggleDarkMode();
   }
 }

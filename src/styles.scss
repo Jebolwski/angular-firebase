@@ -3,7 +3,9 @@
 @tailwind utilities; /* You can add global styles to this file, and also import other style files */
 @import "ngx-toastr/toastr";
 @import "ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
-
+@import "swiper/scss";
+@import "swiper/scss/navigation";
+@import "swiper/scss/pagination";
 html,
 body {
   height: 100%;

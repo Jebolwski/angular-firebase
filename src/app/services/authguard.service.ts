@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 })
 export class AuthguardService implements CanActivate {
   constructor() {}
-
   canActivate(): boolean {
     if (localStorage.getItem('user') != undefined) {
       return false;

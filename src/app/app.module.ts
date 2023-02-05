@@ -29,6 +29,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import player from 'lottie-web';
 import { AddProductModalComponent } from './components/add-product-modal/add-product-modal.component';
+import { SwiperModule } from 'swiper/angular';
 
 export function playerFactory() {
   return player;
@@ -55,6 +56,7 @@ export function playerFactory() {
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     BrowserAnimationsModule,
+    SwiperModule,
     MatIconModule,
     MatInputModule,
     MatTooltipModule,
