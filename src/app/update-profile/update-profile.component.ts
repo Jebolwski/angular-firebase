@@ -14,17 +14,17 @@ export class UpdateProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateProfileForm = new FormGroup({
-      photoURL: new FormControl(this.authservice.user.photoURL, [
+      photoURL: new FormControl(this.authservice.user?.photoURL, [
         Validators.minLength(5),
         Validators.maxLength(150),
       ]),
-      username: new FormControl(this.authservice.user.displayName, [
+      username: new FormControl(this.authservice.user?.displayName, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50),
       ]),
     });
-    this.title.setTitle('Update ' + this.authservice.user.displayName);
+    this.title.setTitle('Update ' + this.authservice.user?.displayName);
   }
 
   get photoURL() {

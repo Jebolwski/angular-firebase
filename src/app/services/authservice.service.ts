@@ -31,7 +31,7 @@ export class AuthserviceService {
 
   darkMode: string = 'false';
 
-  user: any = localStorage.getItem('user')
+  user: User | undefined | null = localStorage.getItem('user')
     ? JSON.parse(localStorage.getItem('user')!)
     : null;
 
@@ -134,7 +134,7 @@ export class AuthserviceService {
     //TODO Getting user from firestore
     let user_q = query(
       collection(this.firestore, 'users'),
-      where('uid', '==', this.user.uid)
+      where('uid', '==', this.user?.uid)
     );
     let getUsers = await getDocs(user_q);
     let id: string = '';

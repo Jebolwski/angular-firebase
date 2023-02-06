@@ -1,4 +1,4 @@
-<div class="text-black dark:text-white dark:bg-stone-800">
+<div class="text-black dark:text-white dark:bg-stone-800 min-h-full">
   <!-- Brands -->
   <div class="py-8">
     <owl-carousel-o [options]="brandsOptions">
@@ -134,23 +134,109 @@
       </div>
     </div>
   </div>
-
-  <!-- Highlights -->
-  <!-- <div class="bg-gradient-to-tr m-3 rounded-md border p-4 self-stretch">
-    <h2 class="text-black mb-3 text-lg">Highlights</h2>
-    <owl-carousel-o [options]="highlightsOptions">
-      <ng-container
-        *ngFor="let product of productservice.products"
-        carouselSlide
+  <!-- Divs with Images -->
+  <div class="grid place-items-center place-content-center my-6">
+    <div class="container">
+      <div
+        class="flex items-center md:justify-between justify-center flex-wrap gap-y-6"
       >
-        <ng-template carouselSlide>
-          <app-product
-            [product]="product"
-            [extraclass]="'bg-white self-stretch'"
-            class="w-[30px]"
-          ></app-product>
-        </ng-template>
-      </ng-container>
-    </owl-carousel-o>
-  </div> -->
+        <div class="bu-div md:w-96 max-w-[300px] d-3-top-sv">
+          <div class="rounded-t-md overflow-hidden md:w-96 max-w-[300px]">
+            <img
+              src="https://cdn.dsmcdn.com/ty718/pimWidgetApi/mobile_20230206085146_SBCoksatanlar.jpg"
+              alt="most selling"
+              class="w-96 roundedt-t-md hover:scale-[1.04] duration-500 d-3-top-sv"
+            />
+          </div>
+          <div
+            class="bg-black text-w duration-200 md:w-96 max-w-[300px] rounded-b-md p-3 d-3-bottom-sv font-medium items-center text-sm flex justify-between"
+          >
+            <p>Ayakkabı & Çanta'da Çok S...</p>
+            <p class="alisveris flex items-center">Alışverişe Başla</p>
+          </div>
+        </div>
+        <div class="bu-div md:w-96 max-w-[300px] d-3-top-sv">
+          <div class="rounded-t-md overflow-hidden md:w-96 max-w-[300px]">
+            <img
+              src="https://cdn.dsmcdn.com/ty690/pimWidgetApi/mobile_20230116140359_2299474AyakkabiCantaMobile202301161401.jpg"
+              alt="most selling"
+              class="w-96 roundedt-t-md hover:scale-[1.04] duration-500 d-3-top-sv"
+            />
+          </div>
+          <div
+            class="bg-black text-w duration-200 md:w-96 max-w-[300px] rounded-b-md p-3 d-3-bottom-sv font-medium items-center text-sm flex justify-between"
+          >
+            <p>Erkeklerde Kombini Tamamlayıcı P...</p>
+            <p class="alisveris flex items-center">Alışverişe Başla</p>
+          </div>
+        </div>
+        <div class="bu-div md:w-96 max-w-[300px] d-3-top-sv">
+          <div class="rounded-t-md overflow-hidden md:w-96 max-w-[300px]">
+            <img
+              src="https://cdn.dsmcdn.com/ty719/pimWidgetApi/mobile_20230206084342_2290160AyakkabiCantaMobile20221108142944.jpg"
+              alt="most selling"
+              class="w-96 roundedt-t-md hover:scale-[1.04] duration-500 d-3-top-sv"
+            />
+          </div>
+          <div
+            class="bg-black text-w duration-200 md:w-96 max-w-[300px] rounded-b-md p-3 d-3-bottom-sv font-medium items-center text-sm flex justify-between"
+          >
+            <p>Çok Satan Sneakerlar</p>
+            <p class="alisveris flex items-center">Alışverişe Başla</p>
+          </div>
+        </div>
+        <div class="bu-div md:w-96 max-w-[300px] d-3-top-sv">
+          <div class="rounded-t-md overflow-hidden md:w-96 max-w-[300px]">
+            <img
+              src="https://cdn.dsmcdn.com/ty717/pimWidgetApi/mobile_20230206091227_mobile202212301257062215284Aya.jpg"
+              alt="most selling"
+              class="w-96 roundedt-t-md hover:scale-[1.04] duration-500 d-3-top-sv"
+            />
+          </div>
+          <div
+            class="bg-black text-w duration-200 md:w-96 max-w-[300px] rounded-b-md p-3 d-3-bottom-sv font-medium items-center text-sm flex justify-between"
+          >
+            <p>Pull&Bear - Büyük Kış İndirimi</p>
+            <p class="alisveris flex items-center">Alışverişe Başla</p>
+          </div>
+        </div>
+        <div class="bu-div md:w-96 max-w-[300px] d-3-top-sv">
+          <div class="rounded-t-md overflow-hidden md:w-96 max-w-[300px]">
+            <img
+              src="https://cdn.dsmcdn.com/ty697/pimWidgetApi/mobile_20230123120928_2298900ErkekMobile202301191701.jpg"
+              alt="most selling"
+              class="w-96 roundedt-t-md hover:scale-[1.04] duration-500 d-3-top-sv"
+            />
+          </div>
+          <div
+            class="bg-black text-w duration-200 md:w-96 max-w-[300px] rounded-b-md p-3 d-3-bottom-sv font-medium items-center text-sm flex justify-between"
+          >
+            <p>Caterpillar & Harley Davidson</p>
+            <p class="alisveris flex items-center">Alışverişe Başla</p>
+          </div>
+        </div>
+        <div class="bu-div md:w-96 max-w-[300px] d-3-top-sv">
+          <div class="rounded-t-md overflow-hidden md:w-96 max-w-[300px]">
+            <img
+              src="https://cdn.dsmcdn.com/ty706/pimWidgetApi/mobile_20230129074207_avvabanner.jpg"
+              alt="most selling"
+              class="w-96 roundedt-t-md hover:scale-[1.04] duration-500 d-3-top-sv"
+            />
+          </div>
+          <div
+            class="bg-black text-w duration-200 md:w-96 max-w-[300px] rounded-b-md p-3 d-3-bottom-sv font-medium items-center text-sm flex justify-between"
+          >
+            <p>Avva</p>
+            <p class="alisveris flex items-center">Alışverişe Başla</p>
+          </div>
+        </div>
+      </div>
+      <!-- Highlights -->
+      <!-- <div
+        class="p-4 my-3 rounded-md border border-orange-100 bg-orange-50 dark:border-stone-800 dark:bg-stone-700"
+      >
+        <p class="font-semibold text-lg text-black mb-4">Öne Çıkanlar</p>
+      </div> -->
+    </div>
+  </div>
 </div>
