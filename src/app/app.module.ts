@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +30,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import player from 'lottie-web';
 import { AddProductModalComponent } from './components/add-product-modal/add-product-modal.component';
 import { SwiperModule } from 'swiper/angular';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 export function playerFactory() {
   return player;
@@ -72,6 +73,12 @@ export function playerFactory() {
       closeButton: true,
       progressBar: true,
       easing: '300',
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
   providers: [],
