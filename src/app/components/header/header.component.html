@@ -17,30 +17,77 @@
           src="https://cdn.dsmcdn.com/web/logo/ty-web.svg"
           alt="Shopify"
           class="w-32"
-          [class.header-icon-reverse]="service.darkMode == 'true'"
+          [class.header-icon-reverse]="service.darkMode == 'dark'"
         />
       </div>
-      <div class="flex items-center justify-end gap-1 w-full">
+      <div class="flex items-center justify-end gap-2 w-full">
         <div>
-          <mat-icon>person</mat-icon>
+          <i
+            class="fa-regular fa-lightbulb fa-lg"
+            (click)="
+              service.darkMode == 'light'
+                ? service.toggleDarkMode('dark')
+                : service.toggleDarkMode('light')
+            "
+          ></i>
+        </div>
+        <div class="relative">
+          <i class="account-div fa-solid fa-user fa-lg py-3"></i>
+          <div class="relative account-div">
+            <div
+              *ngIf="!service.user"
+              class="account-hover-div account-div hidden absolute top-0 -left-[5.25rem] border border-stone-200 dark:border-stone-700 p-4 rounded-md z-10 bg-white dark:bg-stone-800"
+            >
+              <a
+                routerLink="/signin"
+                class="bg-orange-500 block rounded-md text-white text-center w-32 text-sm p-1 px-2 cursor-pointer"
+              >
+                Giriş Yap
+              </a>
+              <a
+                routerLink="/signup"
+                class="border block border-stone-400 cursor-pointer dark:border-stone-800 dark:bg-stone-700 text-center rounded-md mt-3 p-1 px-2 text-sm"
+              >
+                Üye Ol
+              </a>
+            </div>
+            <div
+              *ngIf="service.user"
+              class="account-hover-div account-div hidden absolute top-0 -left-[6.8rem] border border-stone-200 dark:border-stone-700 p-4 rounded-md z-10 bg-white dark:bg-stone-800"
+            >
+              <p class="text-orange-500 text-sm">{{ service.user.email }}</p>
+              <div
+                class="flex items-center opacity-75 my-2 hover:text-orange-500 w-full rounded-md gap-2 text-center text-sm cursor-pointer"
+              >
+                <i class="fa-solid fa-box"></i>
+                Siparişlerim
+              </div>
+              <div
+                (click)="service.signOut()"
+                class="flex items-center opacity-75 w-full rounded-md hover:text-orange-500 gap-2 text-center text-sm cursor-pointer"
+              >
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                Çıkış Yap
+              </div>
+            </div>
+          </div>
         </div>
         <div>
-          <mat-icon>favorite</mat-icon>
+          <i class="fa-solid fa-heart fa-lg"></i>
         </div>
         <div>
-          <mat-icon>shopping_cart</mat-icon>
+          <i class="fa-solid fa-cart-shopping fa-lg"></i>
         </div>
       </div>
-      <div></div>
     </div>
+    <!-- Large Screen  -->
     <div
       class="md:flex items-center opacity-70 justify-end gap-4 text-xs hidden"
     >
-      <p (click)="service.toggleDarkMode()">İndirim Kuponlarım</p>
+      <p>İndirim Kuponlarım</p>
       <p>Trendyol'da Satış Yap</p>
       <p>Yardım & Destek</p>
     </div>
-
     <div
       class="flex items-center justify-start md:justify-between gap-0 md:gap-8 mt-3"
     >
@@ -49,7 +96,7 @@
           src="https://cdn.dsmcdn.com/web/logo/ty-web.svg"
           alt="Shopify"
           class="w-32 hidden md:block"
-          [class.header-icon-reverse]="service.darkMode == 'true'"
+          [class.header-icon-reverse]="service.darkMode == 'dark'"
       /></a>
       <div class="relative w-full md:w-1/2">
         <input
@@ -63,11 +110,57 @@
       </div>
       <div class="items-center justify-between hidden md:flex">
         <div class="flex items-center gap-5">
-          <div
-            class="flex items-center gap-[4px] cursor-pointer text-sm hover:text-orange-400"
-          >
-            <mat-icon class="duration-200 scale-[0.9]">person</mat-icon>
-            Hesabım
+          <i
+            class="fa-regular fa-lightbulb cursor-pointer"
+            (click)="
+              service.darkMode == 'light'
+                ? service.toggleDarkMode('dark')
+                : service.toggleDarkMode('light')
+            "
+          ></i>
+          <div class="relative account-div">
+            <div
+              class="flex items-center gap-[4px] cursor-pointer text-sm hover:text-orange-400 py-2"
+            >
+              <mat-icon class="duration-200 scale-[0.9]">person</mat-icon>
+              Hesabım
+            </div>
+            <div
+              *ngIf="!service.user"
+              class="account-hover-div account-div hidden absolute top-9 -left-8 border border-stone-200 dark:border-stone-700 p-4 rounded-md z-10 bg-white dark:bg-stone-800"
+            >
+              <a
+                routerLink="/signin"
+                class="bg-orange-500 block rounded-md text-white text-center w-32 text-sm p-1 px-2 cursor-pointer"
+              >
+                Giriş Yap
+              </a>
+              <a
+                routerLink="/signup"
+                class="border block border-stone-400 cursor-pointer dark:border-stone-800 dark:bg-stone-700 text-center rounded-md mt-3 p-1 px-2 text-sm"
+              >
+                Üye Ol
+              </a>
+            </div>
+            <div
+              *ngIf="service.user"
+              class="account-hover-div account-div hidden absolute top- -left-8 border border-stone-200 dark:border-stone-700 p-4 rounded-md z-10 bg-white dark:bg-stone-800"
+            >
+              <p class="text-orange-500 text-sm">{{ service.user.email }}</p>
+              <div
+                class="flex items-center opacity-75 my-2 hover:text-orange-500 w-full rounded-md gap-2 text-center text-sm cursor-pointer"
+              >
+                <i class="fa-solid fa-box"></i>
+                Siparişlerim
+              </div>
+              <div
+                (click)="service.signOut()"
+                class="flex items-center opacity-75 w-full rounded-md hover:text-orange-500 gap-2 text-center text-sm cursor-pointer"
+              >
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                Çıkış Yap
+              </div>
+            </div>
           </div>
           <div
             class="flex items-center gap-[4px] cursor-pointer text-sm hover:text-orange-400"
@@ -81,46 +174,6 @@
             <mat-icon class="duration-200 scale-[0.8]">shopping_cart</mat-icon>
             Sepetim
           </div>
-
-          <!-- Profile Picture -->
-          <!-- <div *ngIf="service.user">
-            <img
-              src="{{ service.user.photoURL }}"
-              class="w-7 h-7 rounded-full"
-              *ngIf="service.user.photoURL"
-              matTooltip="{{ service.user.email }}"
-              matTooltipPosition="left"
-            />
-            <div
-              *ngIf="!service.user.photoURL"
-              class="w-7 h-7 bg-stone-300 text-blue-500 font-semibold rounded-full grid place-content-center"
-              matTooltipPosition="left"
-              matTooltip="{{ service.user.email }}"
-            >
-              {{ service.user.email | titlecase | slice : 0 : 1 }}
-            </div>
-          </div> -->
-
-          <!-- Logout -->
-          <!-- <button
-            (click)="service.signOut()"
-            matTooltip="Signout"
-            matTooltipPosition="left"
-            class="bg-gradient-to-br from-blue-800 to-blue-700 grid place-items-center rounded-md p-[1px] cursor-pointer hover:shadow-md duration-200 border border-blue-800"
-            *ngIf="service.user"
-          >
-            <mat-icon>logout</mat-icon>
-          </button> -->
-
-          <!-- Login -->
-          <a
-            routerLink="/signin"
-            *ngIf="!service.user"
-            matTooltip="Signin"
-            matTooltipPosition="left"
-            class="bg-gradient-to-br grid place-items-center from-blue-800 to-blue-700 rounded-md p-[1px] cursor-pointer hover:shadow-md duration-200 border border-blue-800"
-            ><mat-icon>login</mat-icon>
-          </a>
         </div>
       </div>
     </div>

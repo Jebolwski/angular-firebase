@@ -13,6 +13,7 @@ import {
 } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { ProductService } from './services/product.service';
+import { SwUpdate } from '@angular/service-worker';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,13 +25,20 @@ export class AppComponent implements OnInit {
   constructor(
     public authservice: AuthserviceService,
     public firestore: Firestore,
-    private productservice: ProductService
-  ) {}
+    private productservice: ProductService,
+    private updates: SwUpdate
+  ) {
+    updates.versionUpdates.subscribe(() => {
+      console.log('update avaliable');
+
+      updates.activateUpdate();
+    });
+  }
 
   async getProducts() {
     let user_q = query(collection(this.firestore, 'products'));
-    const unsubscribeProducts = onSnapshot(user_q, (snapshot) => {
-      this.productservice.products = snapshot.docs.map((data) => {
+    const unsubscribeProducts = onSnapshot(user_q, (snapshot: any) => {
+      this.productservice.products = snapshot.docs.map((data: any) => {
         return { ...data.data() };
       });
     });
@@ -40,7 +48,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
-    let theme = localStorage.getItem('theme');
-    this.authservice.toggleDarkMode();
+    let theme: string | null = localStorage.getItem('theme');
+    this.authservice.toggleDarkMode(theme);
   }
 }

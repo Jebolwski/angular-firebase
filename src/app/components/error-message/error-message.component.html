@@ -3,24 +3,24 @@
     *ngIf="required && form.controls?.[name]?.errors?.['required'] && form.controls?.[name]?.touched"
     class="text-red-500"
   >
-    {{ name | titlecase }} is required 😥
+    {{ name2 | titlecase }} gerekli 😥
   </p>
   <p
     class="text-red-500"
     *ngIf="form.controls?.[name]?.errors?.['maxlength'] && form.controls?.[name]?.touched"
   >
-    Max length of {{ name | lowercase }} is {{ max }} characters 🤨
+    {{ name2 | titlecase }}'nin maksimum uzunluğu {{ max }} karakterdir 🤨
   </p>
   <p
     class="text-red-500"
     *ngIf="form.controls?.[name]?.errors?.['email'] && form.controls?.[name]?.touched"
   >
-    This doesnt match email format 🤨
+    Email formatıyla uyuşmuyor 🤨
   </p>
   <p
     class="text-red-500"
     *ngIf="form.controls?.[name]?.errors?.['minlength'] && form.controls?.[name]?.touched"
   >
-    Min length of {{ name | lowercase }} is {{ min }} characters 🤔
+    {{ name2 | titlecase }}'nin minimum uzunluğu {{ min }} karakterdir 🤨
   </p>
 </div>

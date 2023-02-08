@@ -44,9 +44,9 @@ body {
 .fading-background {
   background: linear-gradient(
     -45deg,
-    rgb(128, 128, 255),
-    rgb(96, 165, 250),
-    rgb(147, 197, 253)
+    rgb(249 115 22),
+    rgb(255, 134, 47),
+    rgb(255, 145, 66)
   );
   background-size: 400% 400%;
   animation: fadeIt 5s ease-in-out infinite;
@@ -87,4 +87,33 @@ body {
 
 .github-icon {
   animation: spin_reverse 6s infinite 1s;
+}
+
+.header-search-input {
+  border: 2px solid rgb(0 0 0 / 0%);
+  padding: 6.6px 26.6px 6.6px 10px;
+  transition: 0.3s;
+}
+.header-search-input:focus {
+  outline: 0;
+  border: 2px solid rgb(249 115 22 / var(--tw-text-opacity)) !important;
+  transition: 0.3s;
+}
+
+.header-icon-reverse {
+  filter: invert(1);
+}
+
+.categories-header {
+  height: 30px !important;
+}
+
+.login-div {
+  min-height: calc(100vh - 126px);
+}
+
+@media screen and (max-width: 768px) {
+  .login-div {
+    min-height: calc(100vh - 152px);
+  }
 }

@@ -16,7 +16,7 @@ export class SigninComponent {
       Validators.minLength(5),
       Validators.maxLength(40),
     ]),
-    password: new FormControl('', [
+    sifre: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
       Validators.maxLength(40),
@@ -27,7 +27,7 @@ export class SigninComponent {
     return this.loginForm.get('email');
   }
 
-  get password() {
-    return this.loginForm.get('password');
+  get sifre() {
+    return this.loginForm.get('sifre');
   }
 }

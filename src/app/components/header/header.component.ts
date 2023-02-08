@@ -1,15 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthserviceService } from 'src/app/services/authservice.service';
 import SwiperCore, { SwiperOptions } from 'swiper';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   constructor(public service: AuthserviceService) {}
+
+  ngOnInit(): void {
+    $('.account-div').on('mouseover', () => {
+      $('.account-hover-div').show();
+    });
+    $('.account-div').on('mouseleave', () => {
+      $('.account-hover-div').hide();
+    });
+  }
 
   categoriesOptions: OwlOptions = {
     loop: false,
@@ -36,6 +45,7 @@ export class HeaderComponent {
       },
     },
   };
+
   config: SwiperOptions = {
     slidesPerView: 3,
     pagination: { clickable: true },

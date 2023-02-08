@@ -21,7 +21,7 @@ export class ProductService {
     private router: Router
   ) {}
 
-  products!: any[];
+  products!: Product[];
 
   async addProduct(data: Product) {
     let productRef = collection(this.firebase, 'products');

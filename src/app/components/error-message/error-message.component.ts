@@ -15,4 +15,5 @@ export class ErrorMessageComponent {
   @Input() form!: FormGroup;
   @Input() email = false;
   @Input() name!: string;
+  @Input() name2!: string;
 }

@@ -1,6 +1,6 @@
 <body
-  class="min-h-full bg-white text-black dark:text-white dark:bg-stone-800"
-  [class.dark]="authservice.darkMode == 'true'"
+  class="bg-white text-black dark:text-white min-h-screen dark:bg-stone-800 overflow-x-hidden"
+  [class.dark]="authservice.darkMode == 'dark'"
 >
   <app-header></app-header>
   <router-outlet></router-outlet>
