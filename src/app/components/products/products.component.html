@@ -1,13 +1,71 @@
 <div
-  class="flex items-center justify-around"
-  *ngFor="let product of productservice.products"
+  class="flex pl-5 pr-8 dark:bg-stone-800 bg-white text-black dark:text-white min-h-screen"
 >
-  <!-- Highlights -->
-  <div class="flex justify-around items-center">
-    <app-product
-      [product]="product"
-      class="md:w-64 w-1/2"
-      [extraclass]="'bg-white'"
-    ></app-product>
+  <div class="filters pt-8 overflow-y-scroll overflow-x-hidden pr-4 lg:w-1/5">
+    <!-- Marka -->
+    <h3 class="my-1">Marka</h3>
+    <div class="flex items-center gap-1">
+      <input type="checkbox" class="scale-105" id="apple" />
+      <label for="apple" class="text-sm opacity-75">Apple</label>
+    </div>
+    <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
+    <!-- Fiyat -->
+    <h3>Fiyat</h3>
+    <!-- En çok - En az -->
+    <div class="flex items-center gap-2">
+      <input
+        type="text"
+        class="border rounded-md w-[3rem] focus:outline-none p-1 text-xs"
+        placeholder="En çok"
+      />
+      <p>-</p>
+      <input
+        type="text"
+        class="border rounded-md w-[3rem] focus:outline-none p-1 text-xs"
+        placeholder="En az"
+      />
+      <div
+        class="w-7 h-7 rounded-sm bg-neutral-600 opacity-75 scale-[0.85] text-white grid place-content-center"
+      >
+        <div class="fa-solid fa-search fa-sm"></div>
+      </div>
+    </div>
+    <!-- Fiyat Aralıkları -->
+    <div class="text-sm">
+      <div
+        class="my-2 cursor-pointer bg-orange-400 dark:bg-orange-600 hover:dark:bg-orange-500 hover:bg-orange-500 duration-300 w-4/5 p-[2px] text-center rounded-md text-white"
+      >
+        0 TL - 50 TL
+      </div>
+      <div
+        class="my-2 cursor-pointer bg-orange-400 dark:bg-orange-600 hover:dark:bg-orange-500 hover:bg-orange-500 duration-300 w-4/5 p-[2px] text-center rounded-md text-white"
+      >
+        50 TL - 100 TL
+      </div>
+      <div
+        class="my-2 cursor-pointer bg-orange-400 dark:bg-orange-600 hover:dark:bg-orange-500 hover:bg-orange-500 duration-300 w-4/5 p-[2px] text-center rounded-md text-white"
+      >
+        100 TL - 200 TL
+      </div>
+    </div>
+    <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
+
+    <!-- Suya/Toza Dayanıklılık -->
+    <h3 class="my-1">Suya/Toza Dayanıklılık</h3>
+    <div class="text-sm">
+      <div class="flex items-center gap-1">
+        <input type="checkbox" id="var" />
+        <label for="var" class="opacity-70">Var</label>
+      </div>
+      <div class="flex items-center gap-1">
+        <input type="checkbox" id="var" />
+        <label for="var" class="opacity-70">Yok</label>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-stretch justify-center gap-5 flex-wrap mt-5">
+    <div *ngFor="let product of productservice.products">
+      <app-product [product]="product"></app-product>
+    </div>
   </div>
 </div>

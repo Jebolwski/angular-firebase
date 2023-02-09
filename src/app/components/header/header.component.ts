@@ -20,6 +20,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  toggleAddProduct(): void {
+    $('.add-product-div').toggle(200);
+  }
+
   categoriesOptions: OwlOptions = {
     loop: false,
     autoplayHoverPause: false,

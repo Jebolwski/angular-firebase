@@ -5,6 +5,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthguardService as LoggedIn } from './services/authguard.service';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { ProductsComponent } from './components/products/products.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Home • Shopify' },
@@ -24,6 +25,11 @@ const routes: Routes = [
     path: 'profile/:id/update',
     component: UpdateProfileComponent,
     title: 'Update Profile • Shopify',
+  },
+  {
+    path: 'products',
+    component: ProductsComponent,
+    title: 'Products • Shopify',
   },
 ];
 

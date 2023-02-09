@@ -36,7 +36,7 @@
           <div class="relative account-div">
             <div
               *ngIf="!service.user"
-              class="account-hover-div account-div hidden absolute top-0 -left-[5.25rem] border border-stone-200 dark:border-stone-700 p-4 rounded-md z-10 bg-white dark:bg-stone-800"
+              class="account-hover-div account-div hidden absolute top-0 -left-[5.25rem] border border-stone-200 dark:border-stone-700 p-4 rounded-md z-40 bg-white dark:bg-stone-800"
             >
               <a
                 routerLink="/signin"
@@ -53,9 +53,16 @@
             </div>
             <div
               *ngIf="service.user"
-              class="account-hover-div account-div hidden absolute top-0 -left-[6.8rem] border border-stone-200 dark:border-stone-700 p-4 rounded-md z-10 bg-white dark:bg-stone-800"
+              class="account-hover-div account-div hidden absolute top-0 -left-[6.8rem] border border-stone-200 dark:border-stone-700 p-4 rounded-md z-40 bg-white dark:bg-stone-800"
             >
               <p class="text-orange-500 text-sm">{{ service.user.email }}</p>
+              <div
+                class="flex items-center opacity-75 my-2 hover:text-orange-500 w-full rounded-md gap-2 text-center text-sm cursor-pointer"
+                (click)="toggleAddProduct()"
+              >
+                <i class="fa-solid fa-truck-ramp-box"></i>
+                Ürün Ekle
+              </div>
               <div
                 class="flex items-center opacity-75 my-2 hover:text-orange-500 w-full rounded-md gap-2 text-center text-sm cursor-pointer"
               >
@@ -84,7 +91,7 @@
     <div
       class="md:flex items-center opacity-70 justify-end gap-4 text-xs hidden"
     >
-      <p>İndirim Kuponlarım</p>
+      <a routerLink="/products">İndirim Kuponlarım</a>
       <p>Trendyol'da Satış Yap</p>
       <p>Yardım & Destek</p>
     </div>
@@ -127,7 +134,7 @@
             </div>
             <div
               *ngIf="!service.user"
-              class="account-hover-div account-div hidden absolute top-9 -left-8 border border-stone-200 dark:border-stone-700 p-4 rounded-md z-10 bg-white dark:bg-stone-800"
+              class="account-hover-div account-div hidden absolute top-9 -left-8 border border-stone-200 dark:border-stone-700 p-4 rounded-md z-40 bg-white dark:bg-stone-800"
             >
               <a
                 routerLink="/signin"
@@ -144,9 +151,16 @@
             </div>
             <div
               *ngIf="service.user"
-              class="account-hover-div account-div hidden absolute top- -left-8 border border-stone-200 dark:border-stone-700 p-4 rounded-md z-10 bg-white dark:bg-stone-800"
+              class="account-hover-div account-div hidden absolute top- -left-8 border border-stone-200 dark:border-stone-700 p-4 rounded-md z-40 bg-white dark:bg-stone-800"
             >
               <p class="text-orange-500 text-sm">{{ service.user.email }}</p>
+              <div
+                class="flex items-center opacity-75 my-2 hover:text-orange-500 w-full rounded-md gap-2 text-center text-sm cursor-pointer"
+                (click)="toggleAddProduct()"
+              >
+                <i class="fa-solid fa-truck-ramp-box"></i>
+                Ürün Ekle
+              </div>
               <div
                 class="flex items-center opacity-75 my-2 hover:text-orange-500 w-full rounded-md gap-2 text-center text-sm cursor-pointer"
               >
