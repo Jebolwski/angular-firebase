@@ -5,6 +5,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { AuthserviceService } from './services/authservice.service';
 import {
+  SnapshotMetadata,
+  Unsubscribe,
   collection,
   onSnapshot,
   orderBy,
@@ -35,19 +37,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  async getProducts() {
-    let user_q = query(collection(this.firestore, 'products'));
-    const unsubscribeProducts = onSnapshot(user_q, (snapshot: any) => {
-      this.productservice.products = snapshot.docs.map((data: any) => {
-        return { ...data.data() };
-      });
-    });
-
-    return unsubscribeProducts;
-  }
-
   ngOnInit(): void {
-    this.getProducts();
+    this.productservice.getAllProducts();
     let theme: string | null = localStorage.getItem('theme');
     this.authservice.toggleDarkMode(theme);
   }

@@ -7,5 +7,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent {
-  constructor(public productservice: ProductService) {}
+  constructor(public productservice: ProductService) {
+    this.productservice.getFavoriteProdcuts();
+  }
 }

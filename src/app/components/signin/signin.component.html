@@ -6,7 +6,7 @@
     class="w-full mt-5"
     [formGroup]="loginForm"
     (submit)="
-      sifre?.errors || email?.errors
+      password?.errors || email?.errors
         ? null
         : service.loginWithEmailPsw(loginForm.value)
     "
@@ -43,13 +43,15 @@
           </div>
           <input
             type="password"
-            [ngClass]="sifre?.errors && sifre?.touched ? 'border-red-500' : ''"
+            [ngClass]="
+              password?.errors && password?.touched ? 'border-red-500' : ''
+            "
             class="bg-gradient-to-br from-gray-200 to-gray-300 dark:from-stone-700 dark:to-stone-800 text-orange-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
-            formControlName="sifre"
+            formControlName="password"
           />
         </div>
         <app-error-message
-          name="sifre"
+          name="password"
           name2="Şifre"
           [max]="40"
           [min]="6"
@@ -62,7 +64,7 @@
           <button
             mat-stroked-button
             class="w-3/4"
-            [ngClass]="sifre?.errors || email?.errors ? 'opacity-50' : ''"
+            [ngClass]="password?.errors || email?.errors ? 'opacity-50' : ''"
           >
             Giriş Yap
           </button>

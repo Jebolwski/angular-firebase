@@ -72,24 +72,10 @@ export class AuthserviceService {
     localStorage.setItem('theme', theme || 'dark');
   }
 
-  signUp(data: {
-    email: string;
-    password: string;
-    username: string;
-    uid: number;
-    photoURL: string;
-  }) {
+  signUp(data: { email: string; password: string; username: string }) {
     this.angularfireauth
       .createUserWithEmailAndPassword(data.email, data.password)
       .then((resp) => {
-        let users = collection(this.firestore, 'users');
-        let user_data = {
-          photoURL: data.photoURL,
-          displayName: data.username,
-          uid: resp.user?.uid,
-        };
-        addDoc(users, user_data);
-        this.toastr.success('Successfully signed up ✨');
         this.router.navigate(['/signin']);
       })
       .catch((err) => {
