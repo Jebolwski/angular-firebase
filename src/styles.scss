@@ -6,6 +6,7 @@
 @import "swiper/scss";
 @import "swiper/scss/navigation";
 @import "swiper/scss/pagination";
+
 html,
 body {
   height: 100%;
@@ -24,6 +25,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -111,6 +113,24 @@ body {
 
 .login-div {
   min-height: calc(100vh - 126px);
+}
+
+input[type="radio"] {
+  display: grid;
+  place-content: center;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 10.91px;
+  height: 10.91px;
+  border-radius: 50%;
+  transform: scale(0);
+  box-shadow: inset 10.91px 10.91px #f97416;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
 }
 
 @media screen and (max-width: 768px) {

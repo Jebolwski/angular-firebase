@@ -1,142 +1,190 @@
 <div
-  class="flex dark:bg-stone-800 bg-white text-black dark:text-white min-h-screen"
+  class="flex dark:bg-stone-800 relative bg-white text-black dark:text-white min-h-screen"
 >
-  <!-- Filtreler -->
+  <!-- Küçük Ekran Filtre Açma Kapama Tuşu -->
   <div
-    class="filters pt-8 px-3 overflow-y-scroll overflow-x-hidden pr-4 lg:w-1/5 sticky"
+    matTooltip="Filtrele"
+    matTooltipPosition="right"
+    (click)="toggleMobileFilters()"
+    class="filtrele absolute left-0 cursor-pointer z-10 top-0 p-2 rounded-sm border bg-stone-100 border-stone-200 dark:border-stone-600 dark:bg-stone-700 md:hidden block"
   >
-    <!-- Marka -->
-    <h3 class="my-1">Marka</h3>
-    <div class="flex items-center gap-1">
-      <input type="checkbox" class="scale-105" id="apple" />
-      <label for="apple" class="text-sm opacity-75">Apple</label>
+    <i class="fa-solid fa-filter"></i>
+  </div>
+  <!-- Küçük Ekran Filtreler -->
+  <div
+    class="mobile-filters absolute left-0 top-0 bg-gradient-to-bl from-stone-300 to-stone-100 dark:from-stone-800 dark:to-stone-700 pt-8 p-3 border-b-2 border-r-2 border-stone-200 dark:border-stone-700 md:hidden block scale-0 w-0 duration-200"
+  >
+    <div
+      (click)="toggleMobileFilters()"
+      class="filtrele absolute left-0 top-0 cursor-pointer z-10 p-2 rounded-sm"
+    >
+      <i class="fa-solid fa-filter"></i>
     </div>
+    <!-- Marka -->
+    <div>
+      <h3 class="my-1">Marka</h3>
+      <div
+        class="flex items-center gap-2 mt-1 product-checkbox"
+        (click)="productservice.getFilteredProdcutsMobile('')"
+      >
+        <input type="radio" class="scale-105" id="-2" name="brand" />
+        <label for="-2">Hepsi</label>
+      </div>
+      <div *ngFor="let product of productservice.products; let index = index">
+        <div
+          class="flex items-center gap-2 mt-1 product-checkbox"
+          (click)="productservice.getFilteredProdcutsMobile(product.brand)"
+        >
+          <input
+            type="radio"
+            class="scale-105"
+            id="{{ index }}"
+            *ngIf="product.brand == productservice.brandfilter"
+            checked
+            name="brand"
+          />
+
+          <input
+            type="radio"
+            class="scale-105"
+            id="{{ index }}"
+            *ngIf="product.brand != productservice.brandfilter"
+            name="brand"
+          />
+          <label for="{{ index }}">{{ product.brand }}</label>
+        </div>
+      </div>
+    </div>
+
     <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
     <!-- Fiyat -->
-    <h3>Fiyat</h3>
-    <!-- En çok - En az -->
-    <div class="flex items-center xl:gap-2 gap-1">
-      <input
-        type="text"
-        class="border minimum-fiyat rounded-md dark:bg-neutral-700 w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
-        placeholder="En az"
-      />
-      <p>-</p>
-      <input
-        type="text"
-        class="border maksimum-fiyat dark:bg-neutral-700 rounded-md w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
-        placeholder="En çok"
-      />
+    <div>
+      <h3>Fiyat</h3>
+      <!-- En çok - En az -->
+      <div class="flex items-center xl:gap-2 gap-1">
+        <input
+          type="text"
+          class="border minimum-fiyat-mobile rounded-md dark:bg-neutral-700 w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
+          placeholder="En az"
+        />
+        <p>-</p>
+        <input
+          type="text"
+          class="border maksimum-fiyat-mobile dark:bg-neutral-700 rounded-md w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
+          placeholder="En çok"
+        />
 
-      <div
-        class="w-7 h-7 rounded-sm bg-neutral-600 hover:bg-orange-500 duration-300 cursor-pointer opacity-75 scale-[0.85] text-white grid place-content-center"
-        (click)="productservice.getFilteredProdcuts()"
-      >
-        <div class="fa-solid fa-search fa-sm"></div>
+        <div
+          class="w-7 h-7 rounded-sm bg-neutral-600 hover:bg-orange-500 duration-300 cursor-pointer opacity-75 scale-[0.85] text-white grid place-content-center"
+          (click)="
+            productservice.getFilteredProdcutsMobile(productservice.brandfilter)
+          "
+        >
+          <div class="fa-solid fa-search fa-sm"></div>
+        </div>
       </div>
     </div>
     <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
     <!-- Suya/Toza Dayanıklılık -->
-    <h3 class="my-1">Suya/Toza Dayanıklılık</h3>
-    <div class="text-sm">
-      <div class="flex items-center gap-1">
-        <input type="checkbox" id="var" />
-        <label for="var" class="opacity-70">Var</label>
-      </div>
-      <div class="flex items-center gap-1">
-        <input type="checkbox" id="var" />
-        <label for="var" class="opacity-70">Yok</label>
-      </div>
-    </div>
-    <!-- MESSSİİSİSİS -->
-
-    <!-- Marka -->
-    <h3 class="my-1">Marka</h3>
-    <div class="flex items-center gap-1">
-      <input type="checkbox" class="scale-105" id="apple" />
-      <label for="apple" class="text-sm opacity-75">Apple</label>
-    </div>
-    <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
-    <!-- Fiyat -->
-    <h3>Fiyat</h3>
-    <!-- En çok - En az -->
-    <div class="flex items-center xl:gap-2 gap-1">
-      <input
-        type="text"
-        class="border minimum-fiyat rounded-md dark:bg-neutral-700 w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
-        placeholder="En az"
-      />
-      <p>-</p>
-      <input
-        type="text"
-        class="border maksimum-fiyat dark:bg-neutral-700 rounded-md w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
-        placeholder="En çok"
-      />
-
-      <div
-        class="w-7 h-7 rounded-sm bg-neutral-600 hover:bg-orange-500 duration-300 cursor-pointer opacity-75 scale-[0.85] text-white grid place-content-center"
-        (click)="productservice.getFilteredProdcuts()"
-      >
-        <div class="fa-solid fa-search fa-sm"></div>
-      </div>
-    </div>
-    <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
-    <!-- Suya/Toza Dayanıklılık -->
-    <h3 class="my-1">Suya/Toza Dayanıklılık</h3>
-    <div class="text-sm">
-      <div class="flex items-center gap-1">
-        <input type="checkbox" id="var" />
-        <label for="var" class="opacity-70">Var</label>
-      </div>
-      <div class="flex items-center gap-1">
-        <input type="checkbox" id="var" />
-        <label for="var" class="opacity-70">Yok</label>
-      </div>
-    </div>
-    <!-- Marka -->
-    <h3 class="my-1">Marka</h3>
-    <div class="flex items-center gap-1">
-      <input type="checkbox" class="scale-105" id="apple" />
-      <label for="apple" class="text-sm opacity-75">Apple</label>
-    </div>
-    <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
-    <!-- Fiyat -->
-    <h3>Fiyat</h3>
-    <!-- En çok - En az -->
-    <div class="flex items-center xl:gap-2 gap-1">
-      <input
-        type="text"
-        class="border minimum-fiyat rounded-md dark:bg-neutral-700 w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
-        placeholder="En az"
-      />
-      <p>-</p>
-      <input
-        type="text"
-        class="border maksimum-fiyat dark:bg-neutral-700 rounded-md w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
-        placeholder="En çok"
-      />
-
-      <div
-        class="w-7 h-7 rounded-sm bg-neutral-600 hover:bg-orange-500 duration-300 cursor-pointer opacity-75 scale-[0.85] text-white grid place-content-center"
-        (click)="productservice.getFilteredProdcuts()"
-      >
-        <div class="fa-solid fa-search fa-sm"></div>
-      </div>
-    </div>
-    <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
-    <!-- Suya/Toza Dayanıklılık -->
-    <h3 class="my-1">Suya/Toza Dayanıklılık</h3>
-    <div class="text-sm">
-      <div class="flex items-center gap-1">
-        <input type="checkbox" id="var" />
-        <label for="var" class="opacity-70">Var</label>
-      </div>
-      <div class="flex items-center gap-1">
-        <input type="checkbox" id="var" />
-        <label for="var" class="opacity-70">Yok</label>
+    <div>
+      <h3 class="my-1">Suya/Toza Dayanıklılık</h3>
+      <div class="text-sm">
+        <div class="flex items-center gap-1">
+          <input type="checkbox" id="var" />
+          <label for="var" class="opacity-70">Var</label>
+        </div>
+        <div class="flex items-center gap-1">
+          <input type="checkbox" id="yok" />
+          <label for="yok" class="opacity-70">Yok</label>
+        </div>
       </div>
     </div>
   </div>
+  <!-- Büyük Ekran Filtreler -->
+  <div
+    class="filters pt-8 px-3 overflow-y-scroll overflow-x-hidden pr-4 lg:w-1/5 md:block hidden"
+  >
+    <!-- Marka -->
+    <div>
+      <h3 class="my-1">Marka</h3>
+      <div
+        class="flex items-center gap-2 mt-1 product-checkbox"
+        (click)="productservice.getFilteredProdcutsLarge('')"
+      >
+        <input type="radio" class="scale-105" id="-1" name="brand" />
+        <label for="-1">Hepsi</label>
+      </div>
+      <div *ngFor="let product of productservice.products; let index = index">
+        <div
+          class="flex items-center gap-2 mt-1 product-checkbox"
+          (click)="productservice.getFilteredProdcutsLarge(product.brand)"
+        >
+          <input
+            type="radio"
+            class="scale-105"
+            id="{{ index }}"
+            *ngIf="product.brand == productservice.brandfilter"
+            checked
+            name="brand"
+          />
+
+          <input
+            type="radio"
+            class="scale-105"
+            id="{{ index }}"
+            *ngIf="product.brand != productservice.brandfilter"
+            name="brand"
+          />
+          <label for="{{ index }}">{{ product.brand }}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
+    <!-- Fiyat -->
+    <div>
+      <h3>Fiyat</h3>
+      <!-- En çok - En az -->
+      <div class="flex items-center xl:gap-2 gap-1">
+        <input
+          type="text"
+          class="border minimum-fiyat rounded-md dark:bg-neutral-700 w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
+          placeholder="En az"
+        />
+        <p>-</p>
+        <input
+          type="text"
+          class="border maksimum-fiyat dark:bg-neutral-700 rounded-md w-[3rem] dark:border-neutral-600 focus:outline-none p-1 text-xs"
+          placeholder="En çok"
+        />
+
+        <div
+          class="w-7 h-7 rounded-sm bg-neutral-600 hover:bg-orange-500 duration-300 cursor-pointer opacity-75 scale-[0.85] text-white grid place-content-center"
+          (click)="
+            productservice.getFilteredProdcutsLarge(productservice.brandfilter)
+          "
+        >
+          <div class="fa-solid fa-search fa-sm"></div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full h-[2px] bg-stone-200 dark:bg-stone-600 my-5"></div>
+    <!-- Suya/Toza Dayanıklılık -->
+    <div>
+      <h3 class="my-1">Suya/Toza Dayanıklılık</h3>
+      <div class="text-sm">
+        <div class="flex items-center gap-1">
+          <input type="checkbox" id="var1" />
+          <label for="var1" class="opacity-70">Var</label>
+        </div>
+        <div class="flex items-center gap-1">
+          <input type="checkbox" id="yok1" />
+          <label for="yok1" class="opacity-70">Yok</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Ürünler -->
   <div
     class="flex items-stretch justify-center gap-5 px-3 flex-wrap my-5 w-full sticky top-0"
   >

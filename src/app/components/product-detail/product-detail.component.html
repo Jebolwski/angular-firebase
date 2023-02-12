@@ -1,1 +1,5 @@
-<p>product-detail works!</p>
+<div class="min-h-sceen dark:bg-stone-800 bg-white text-black dark:text-white">
+  <p  *ngIf="productService.product">
+  {{productService.product.name}}
+  </p>
+</div>

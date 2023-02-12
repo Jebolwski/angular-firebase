@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { arrayRemove } from 'firebase/firestore';
 import { Product } from 'src/app/interfaces/product';
+import { AuthserviceService } from 'src/app/services/authservice.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -10,7 +10,13 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductComponent implements OnInit {
   @Input() product!: Product;
+
   @Input() extraclass!: string;
+
+  constructor(
+    public productservice: ProductService,
+    public authservice: AuthserviceService
+  ) {}
 
   ngOnInit(): void {}
 }

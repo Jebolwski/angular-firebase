@@ -1,21 +1,38 @@
-<div
-  class="rounded-sm relative p-3 min-w-[220px] min-h-[310px] max-w-[232px] hover:shadow-md duration-300 cursor-pointer dark:bg-gradient-to-br bg-white dark:from-stone-700 dark:to-stone-800 mx-8"
+<a [routerLink]="'/product/'+product.id"
+  class="rounded-sm block relative p-3 min-w-[220px] min-h-[310px] max-w-[232px] border border-white hover:border-stone-200 dark:border-stone-700 hover:shadow-md duration-300 cursor-pointer dark:bg-gradient-to-br bg-white dark:from-stone-700 dark:to-stone-800 mx-8"
 >
   <div class="grid place-items-center mb-3 h-48">
     <div
       class="absolute right-4 top-2 bg-white shadow-md w-7 h-7 grid place-items-center rounded-full dark:bg-stone-700 z-30"
     >
-      <i class="fa-regular fa-heart hover:text-orange-500"></i>
+      <div (click)="productservice.toggleFavoriteProducts(product.id)">
+        <i
+          class="fa-regular fa-heart hover:text-white text-orange-500 duration-200"
+          *ngIf="
+            product && productservice.favorites && productservice.favorites[0]?.pids?.includes(product.id)
+          "
+        ></i>
+        <i
+          class="fa-regular fa-heart hover:text-orange-500 duration-200"
+          *ngIf="
+            !(
+              product && productservice.favorites && productservice.favorites[0]?.pids?.includes(product.id)
+            )
+          "
+        ></i>
+      </div>
     </div>
     <img
       *ngIf="product.photos"
       [src]="product.photos[0]"
       class="h-44 rounded-md hover:scale-110 duration-200"
+      [alt]="product.name"
     />
     <img
       *ngIf="!product.photos"
       src="https://i.pinimg.com/originals/4a/63/97/4a6397987a4d783792b0b9bccbb67edd.png"
       class="w-2/3"
+      [alt]="product.name"
     />
   </div>
 
@@ -30,4 +47,4 @@
     <p class="mb-2 opacity-60 ml-1">(7)</p>
   </div>
   <p class="text-orange-600 font-medium text-lg">{{ product.price }} TL</p>
-</div>
+</a>

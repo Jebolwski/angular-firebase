@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthserviceService } from './authservice.service';
 import { Favorites } from '../interfaces/favorites';
-
+import * as $ from 'jquery';
 @Injectable({
   providedIn: 'root',
 })
@@ -28,25 +28,85 @@ export class ProductService {
     private authservice: AuthserviceService
   ) {}
 
+
+  product!:Product;
   products!: Product[];
-  favorites!: Favorites;
+  favorites!: Favorites[];
+  brandfilter: string = '';
+
+  async getAProduct(id:string): Promise<Unsubscribe>{
+    const productRef = doc(this.firestore, 'products', id);
+    console.log("mesi")
+    return onSnapshot(productRef, (snapshot: any) => {
+      this.product={...snapshot.data(),id:snapshot.id}
+    });
+  }
 
   async getFavoriteProdcuts(): Promise<Unsubscribe> {
-    let filtered_q = query(collection(this.firestore, 'favorites'));
-    console.log(this.authservice.user?.uid);
+    let filtered_q = query(
+      collection(this.firestore, 'favorites'),
+      where('uid', '==', this.authservice.user?.uid || 0 )
+    );
 
-    const unsubscribeProducts = onSnapshot(filtered_q, (snapshot: any) => {
-      this.favorites = snapshot.docs.map((data: { data(): Favorites }) => {
-        console.log(data.data());
-
-        return { ...data.data() };
-      });
+    return onSnapshot(filtered_q, (snapshot: any) => {
+      this.favorites = snapshot.docs.map(
+        (data: { data(): Favorites; id: string }) => {
+          return { ...data.data(), id: data.id };
+        }
+      );
     });
 
+  }
+
+  async getFilteredProdcutsMobile(brand: string): Promise<Unsubscribe> {
+    this.brandfilter = brand;
+    let upmin: HTMLInputElement | null = document.querySelector(
+      '.minimum-fiyat-mobile'
+    );
+    let upmax: HTMLInputElement | null = document.querySelector(
+      '.maksimum-fiyat-mobile'
+    );
+
+    let upper_bound: string | number =
+      upmax != null ? parseInt(upmax?.value) : Infinity;
+    let lower_bound: string | number =
+      upmin != null ? parseInt(upmin?.value) : 0;
+    lower_bound = Number.isNaN(lower_bound) ? 0 : lower_bound;
+    upper_bound = Number.isNaN(upper_bound) ? Infinity : upper_bound;
+
+    let user_q = query(collection(this.firestore, 'products'));
+    if (this.brandfilter.length > 0) {
+      user_q = query(
+        collection(this.firestore, 'products'),
+        where('price', '<=', upper_bound),
+        where('price', '>=', lower_bound),
+        where('brand', '==', this.brandfilter)
+      );
+    } else {
+      user_q = query(
+        collection(this.firestore, 'products'),
+        where('price', '<=', upper_bound),
+        where('price', '>=', lower_bound)
+      );
+    }
+
+    const unsubscribeProducts = onSnapshot(user_q, (snapshot: any) => {
+      this.products = snapshot.docs.map(
+        (data: { data(): Product; id: string }) => {
+          return { ...data.data(), id: data.id };
+        }
+      );
+    });
+    //?toggleMobileFilters
+
+    $('.mobile-filters').toggleClass('scale-0').toggleClass('w-0').toggleClass('sm:w-1/2').toggleClass('w-3/4');
+    //?-------------------
     return unsubscribeProducts;
   }
 
-  async getFilteredProdcuts(): Promise<Unsubscribe> {
+  async getFilteredProdcutsLarge(brand: string): Promise<Unsubscribe> {
+    this.brandfilter = brand;
+    //! Fiyat
     let upmin: HTMLInputElement | null =
       document.querySelector('.minimum-fiyat');
     let upmax: HTMLInputElement | null =
@@ -58,48 +118,88 @@ export class ProductService {
       upmin != null ? parseInt(upmin?.value) : 0;
     lower_bound = Number.isNaN(lower_bound) ? 0 : lower_bound;
     upper_bound = Number.isNaN(upper_bound) ? Infinity : upper_bound;
-    let user_q = query(
-      collection(this.firestore, 'products'),
-      where('price', '<=', upper_bound),
-      where('price', '>=', lower_bound)
-    );
+    //! ---------------------
 
-    const unsubscribeProducts = onSnapshot(user_q, (snapshot: any) => {
-      this.products = snapshot.docs.map((data: { data(): Product }) => {
-        return { ...data.data() };
-      });
+    //! Kategori
+
+    //! ---------------------
+    let user_q = query(collection(this.firestore, 'products'));
+    if (this.brandfilter.length > 0) {
+      user_q = query(
+        collection(this.firestore, 'products'),
+        where('price', '<=', upper_bound),
+        where('price', '>=', lower_bound),
+        where('brand', '==', this.brandfilter)
+      );
+    } else {
+      user_q = query(
+        collection(this.firestore, 'products'),
+        where('price', '<=', upper_bound),
+        where('price', '>=', lower_bound)
+      );
+    }
+
+    return onSnapshot(user_q, (snapshot: any) => {
+      this.products = snapshot.docs.map(
+        (data: { data(): Product; id: string }) => {
+          return { ...data.data(), id: data.id };
+        }
+      );
     });
 
-    return unsubscribeProducts;
   }
 
   async getAllProducts(): Promise<Unsubscribe> {
     let user_q = query(collection(this.firestore, 'products'));
-    const unsubscribeProducts = onSnapshot(user_q, (snapshot: any) => {
-      this.products = snapshot.docs.map((data: any) => {
-        return { ...data.data() };
-      });
+    return onSnapshot(user_q, (snapshot: any) => {
+      this.products = snapshot.docs.map(
+        (data: { data(): Product; id: string }) => {
+          return { ...data.data(), id: data.id };
+        }
+      );
     });
 
-    return unsubscribeProducts;
+  }
+
+  async toggleFavoriteProducts(pid: string): Promise<void> {
+    let favoriteRef = doc(this.firestore, 'favorites', this.favorites[0].id);
+    let data = {
+      uid: this.authservice.user?.uid,
+      pids: this.favorites[0].pids,
+    };
+
+    if (this.favorites[0].pids.includes(pid)) {
+      this.favorites[0].pids = this.favorites[0].pids.filter(
+        (letter: string) => {
+          return letter != pid;
+        }
+      );
+      console.log(this.favorites[0].pids);
+    } else {
+      this.favorites[0].pids.push(pid);
+    }
+    await updateDoc(favoriteRef, data)
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async getUsersFavorites(): Promise<Unsubscribe> {
     let user_q = query(collection(this.firestore, ''));
-    const unsubscribeProducts = onSnapshot(user_q, (snapshot: any) => {
+    return onSnapshot(user_q, (snapshot: any) => {
       this.products = snapshot.docs.map((data: any) => {
         return { ...data.data() };
       });
     });
 
-    return unsubscribeProducts;
   }
 
   async addProduct(data: Product) {
     let productRef = collection(this.firestore, 'products');
     await addDoc(productRef, data)
-      .then((resp) => {
-        this.toastr.success('Successfully added product ✨');
+      .then(() => {
+        this.toastr.success('Successfully added product ✨','Success');
         this.router.navigate(['/']);
       })
       .catch((err) => {
@@ -110,7 +210,7 @@ export class ProductService {
   async updateProduct(id: string, data: any) {
     let productRef = doc(this.firestore, 'products', id);
     await updateDoc(productRef, data)
-      .then((resp) => {
+      .then(() => {
         this.router.navigate(['/']);
         this.toastr.success('Successfully updated product 👍');
       })
@@ -122,7 +222,7 @@ export class ProductService {
   async deleteProduct(id: string) {
     let productRef = doc(this.firestore, 'products', id);
     await deleteDoc(productRef)
-      .then((resp) => {
+      .then(() => {
         this.router.navigate(['/']);
         this.toastr.success('Successfully deleted product 👽');
       })

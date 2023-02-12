@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthguardService as LoggedIn } from './services/authguard.service';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { ProductsComponent } from './components/products/products.component';
+import {ProductDetailComponent} from "./components/product-detail/product-detail.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Home • Shopify' },
@@ -30,6 +31,11 @@ const routes: Routes = [
     path: 'products',
     component: ProductsComponent,
     title: 'Products • Shopify',
+  },
+  {
+    path: 'product/:id',
+    component: ProductDetailComponent,
+    title: 'Product • Shopify',
   },
 ];
 
