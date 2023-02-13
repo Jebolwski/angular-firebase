@@ -36,7 +36,6 @@ export class ProductService {
 
   async getAProduct(id:string): Promise<Unsubscribe>{
     const productRef = doc(this.firestore, 'products', id);
-    console.log("mesi")
     return onSnapshot(productRef, (snapshot: any) => {
       this.product={...snapshot.data(),id:snapshot.id}
     });
