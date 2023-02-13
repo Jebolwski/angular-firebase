@@ -1,18 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { GoogleAuthProvider } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
 import { AuthserviceService } from './services/authservice.service';
-import {
-  SnapshotMetadata,
-  Unsubscribe,
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
+
 import { Firestore } from '@angular/fire/firestore';
 import { ProductService } from './services/product.service';
 import { SwUpdate } from '@angular/service-worker';
@@ -32,7 +20,6 @@ export class AppComponent implements OnInit {
   ) {
     updates.versionUpdates.subscribe(() => {
       console.log('update avaliable');
-
       updates.activateUpdate();
     });
   }

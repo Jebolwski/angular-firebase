@@ -11,9 +11,7 @@ import { SigninComponent } from './components/signin/signin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { HeaderComponent } from './components/header/header.component';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { HomeComponent } from './components/home/home.component';
@@ -27,14 +25,11 @@ import { ProductComponent } from './components/product/product.component';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-import player from 'lottie-web';
 import { AddProductModalComponent } from './components/add-product-modal/add-product-modal.component';
 import { SwiperModule } from 'swiper/angular';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { CartComponent } from './components/cart/cart.component';
 
-export function playerFactory() {
-  return player;
-}
 
 @NgModule({
   declarations: [
@@ -49,6 +44,7 @@ export function playerFactory() {
     ProductComponent,
     ProductDetailComponent,
     AddProductModalComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,

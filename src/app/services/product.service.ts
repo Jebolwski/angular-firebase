@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { AuthserviceService } from './authservice.service';
 import { Favorites } from '../interfaces/favorites';
 import * as $ from 'jquery';
+import {Cart} from "../interfaces/cart";
 @Injectable({
   providedIn: 'root',
 })
@@ -32,6 +33,8 @@ export class ProductService {
   product!:Product;
   products!: Product[];
   favorites!: Favorites[];
+
+  cart!:Cart[];
   brandfilter: string = '';
 
   async getAProduct(id:string): Promise<Unsubscribe>{
@@ -161,11 +164,9 @@ export class ProductService {
   }
 
   async toggleFavoriteProducts(pid: string): Promise<void> {
+    console.log(this.favorites)
     let favoriteRef = doc(this.firestore, 'favorites', this.favorites[0].id);
-    let data = {
-      uid: this.authservice.user?.uid,
-      pids: this.favorites[0].pids,
-    };
+
 
     if (this.favorites[0].pids.includes(pid)) {
       this.favorites[0].pids = this.favorites[0].pids.filter(
@@ -177,11 +178,31 @@ export class ProductService {
     } else {
       this.favorites[0].pids.push(pid);
     }
+    let data = {
+      uid: this.authservice.user?.uid,
+      pids: this.favorites[0].pids,
+    };
     await updateDoc(favoriteRef, data)
       .then(() => {})
       .catch((err) => {
         console.log(err);
       });
+  }
+
+
+  async getCart(): Promise<Unsubscribe> {
+      let cart_q = query(
+        collection(this.firestore, 'cart'),
+        where('uid', '==', this.authservice.user?.uid),
+      );
+    return onSnapshot(cart_q, (snapshot: any) => {
+      this.cart = snapshot.docs.map(
+        (data: { data(): Cart; id: string }) => {
+          return { ...data.data(), id: data.id };
+        }
+      );
+    });
+
   }
 
   async getUsersFavorites(): Promise<Unsubscribe> {

@@ -11,6 +11,7 @@ export class ProductDetailComponent {
 
  constructor(public productService: ProductService,private route:ActivatedRoute){
    let pid = this.route.snapshot.paramMap.get('id');
+   productService.getFavoriteProdcuts();
    productService.getAProduct(pid || "");
  }
 
