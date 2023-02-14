@@ -1,0 +1,57 @@
+<div *ngIf="productservice.cart" class="min-h-full dark:bg-stone-800 text-black dark:text-white">
+  <div class="grid place-content-center">
+
+    <div class="container">
+      <div class="flex gap-5 mt-5">
+        <div>
+          <h2 class="text-xl mb-3">Sepetim ({{productservice.cart[0].pdids.length}} Ürün)</h2>
+          <div *ngFor="let product of products">
+            <div class="border border-stone-200 dark:border-stone-700 rounded-md my-5">
+              <div class="border-b border-stone-200 dark:border-stone-700">
+                <div class="flex items-center gap-2 bg-stone-100 dark:bg-stone-700 p-2 text-sm">
+                  <input checked type="checkbox">
+                  <h3 class="opacity-75">Satıcı: Fandomoda</h3>
+                  <div class="bg-green-600 text-white p-1 rounded-md grid place-items-center text-xs">9.1</div>
+                  <i class="fa-solid fa-chevron-right fa-sm"></i>
+                </div>
+              </div>
+              <div class="bg-green-100 dark:bg-green-200 text-sm py-1 text-black text-center"><i
+                class="fa-brands fa-dropbox text-green-800"></i> Kargo Bedava!
+              </div>
+              <div class="flex items-center gap-5 p-2 py-4 justify-between">
+                <input checked type="checkbox">
+                <img [src]="product.photos[0]" alt="Product Image" class="border w-11">
+                <div>
+                  <p *ngIf="product.name.length>55">{{product.name|slice :0:55}}...</p>
+                  <p *ngIf="product.name.length<=55">{{product.name}}</p>
+                  <p class="text-xs opacity-75">Beden : M</p>
+                  <p class="text-xs opacity-75">Tahmini Kargoya Teslim: 2 gün sonra</p>
+                </div>
+                <div class="lg:mx-16 mx-8 flex items-center">
+                  <div
+                    class="bg-stone-100 w-5 py-1 grid place-items-center border border-stone-200 dark:border-stone-900 dark:bg-stone-700 rounded-l cursor-pointer">
+                    -
+                  </div>
+                  <div class="border-t border-b border-stone-200 dark:border-stone-900 p-1">{{product.count}}</div>
+                  <div
+                    class="bg-stone-100 w-5 py-1 grid place-items-center border border-stone-200 dark:border-stone-900 dark:bg-stone-700 rounded-r cursor-pointer">
+                    +
+                  </div>
+                </div>
+                <h4 class="text-orange-500 font-medium">{{product.price}}TL</h4>
+                <i class="fa-regular fa-trash-can"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button
+            class="bg-orange-500 text-white py-3 px-5 text-lg rounded-md hover:bg-orange-400 flex items-center gap-2">
+            <p>Sepeti Onayla</p>
+            <i class="fa-solid fa-chevron-right fa-sm"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

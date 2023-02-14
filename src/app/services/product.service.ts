@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import {
-  Unsubscribe,
   addDoc,
   collection,
   deleteDoc,
   doc,
+  getDoc,
   onSnapshot,
   query,
+  Unsubscribe,
   updateDoc,
   where,
 } from 'firebase/firestore';
@@ -17,11 +18,19 @@ import { Router } from '@angular/router';
 import { AuthserviceService } from './authservice.service';
 import { Favorites } from '../interfaces/favorites';
 import * as $ from 'jquery';
-import {Cart} from "../interfaces/cart";
+import { Cart } from '../interfaces/cart';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+  product!: Product;
+  products!: Product[];
+  favorites!: Favorites[];
+  cart!: Cart[];
+  brandfilter: string = '';
+  productsHere: any[] = [];
+
   constructor(
     public firestore: Firestore,
     private toastr: ToastrService,
@@ -29,25 +38,17 @@ export class ProductService {
     private authservice: AuthserviceService
   ) {}
 
-
-  product!:Product;
-  products!: Product[];
-  favorites!: Favorites[];
-
-  cart!:Cart[];
-  brandfilter: string = '';
-
-  async getAProduct(id:string): Promise<Unsubscribe>{
+  async getAProduct(id: string): Promise<Unsubscribe> {
     const productRef = doc(this.firestore, 'products', id);
     return onSnapshot(productRef, (snapshot: any) => {
-      this.product={...snapshot.data(),id:snapshot.id}
+      this.product = { ...snapshot.data(), id: snapshot.id };
     });
   }
 
   async getFavoriteProdcuts(): Promise<Unsubscribe> {
     let filtered_q = query(
       collection(this.firestore, 'favorites'),
-      where('uid', '==', this.authservice.user?.uid || 0 )
+      where('uid', '==', this.authservice.user?.uid || 0)
     );
 
     return onSnapshot(filtered_q, (snapshot: any) => {
@@ -57,7 +58,6 @@ export class ProductService {
         }
       );
     });
-
   }
 
   async getFilteredProdcutsMobile(brand: string): Promise<Unsubscribe> {
@@ -101,7 +101,11 @@ export class ProductService {
     });
     //?toggleMobileFilters
 
-    $('.mobile-filters').toggleClass('scale-0').toggleClass('w-0').toggleClass('sm:w-1/2').toggleClass('w-3/4');
+    $('.mobile-filters')
+      .toggleClass('scale-0')
+      .toggleClass('w-0')
+      .toggleClass('sm:w-1/2')
+      .toggleClass('w-3/4');
     //?-------------------
     return unsubscribeProducts;
   }
@@ -148,7 +152,6 @@ export class ProductService {
         }
       );
     });
-
   }
 
   async getAllProducts(): Promise<Unsubscribe> {
@@ -160,13 +163,11 @@ export class ProductService {
         }
       );
     });
-
   }
 
   async toggleFavoriteProducts(pid: string): Promise<void> {
-    console.log(this.favorites)
+    console.log(this.favorites);
     let favoriteRef = doc(this.firestore, 'favorites', this.favorites[0].id);
-
 
     if (this.favorites[0].pids.includes(pid)) {
       this.favorites[0].pids = this.favorites[0].pids.filter(
@@ -189,20 +190,16 @@ export class ProductService {
       });
   }
 
-
   async getCart(): Promise<Unsubscribe> {
-      let cart_q = query(
-        collection(this.firestore, 'cart'),
-        where('uid', '==', this.authservice.user?.uid),
-      );
+    let cart_q = query(
+      collection(this.firestore, 'cart'),
+      where('uid', '==', this.authservice.user?.uid)
+    );
     return onSnapshot(cart_q, (snapshot: any) => {
-      this.cart = snapshot.docs.map(
-        (data: { data(): Cart; id: string }) => {
-          return { ...data.data(), id: data.id };
-        }
-      );
+      this.cart = snapshot.docs.map((data: { data(): Cart; id: string }) => {
+        return { ...data.data(), id: data.id };
+      });
     });
-
   }
 
   async getUsersFavorites(): Promise<Unsubscribe> {
@@ -212,14 +209,13 @@ export class ProductService {
         return { ...data.data() };
       });
     });
-
   }
 
   async addProduct(data: Product) {
     let productRef = collection(this.firestore, 'products');
     await addDoc(productRef, data)
       .then(() => {
-        this.toastr.success('Successfully added product ✨','Success');
+        this.toastr.success('Successfully added product ✨', 'Success');
         this.router.navigate(['/']);
       })
       .catch((err) => {
@@ -249,5 +245,51 @@ export class ProductService {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  async constructProductsOfCart(): Promise<Product[]> {
+    await this.getCart()
+      .then(() => {
+        setTimeout(() => {
+          this.cart[0].pdids.forEach((pdid: string) => {
+            const productRef = doc(this.firestore, 'products', pdid);
+            getDoc(productRef)
+              .then((data: any) => {
+                let pr = this.productsHere.find((el: Product) => {
+                  return el.id == data.id;
+                });
+                console.log(pr);
+
+                if (pr == undefined) {
+                  this.productsHere.push({
+                    ...data.data(),
+                    id: data.id,
+                    count: 1,
+                  });
+                } else {
+                  let proudctLocal: Product = this.productsHere.find(
+                    (el: Product) => {
+                      return el.id == data.id;
+                    }
+                  );
+                  proudctLocal.count! += 1;
+                  proudctLocal.price! =
+                    proudctLocal?.count! * proudctLocal?.price;
+                }
+              })
+              .catch((err: Error) => {
+                console.log(err);
+              });
+          });
+        }, 800);
+      })
+      .catch((err: Error) => {
+        console.log(err);
+      });
+    return this.productsHere;
+  }
+
+  removeProductFromCart(): Product[] {
+    return this.productsHere;
   }
 }

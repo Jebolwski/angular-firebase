@@ -1,0 +1,19 @@
+input[type="checkbox"] {
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  transform: scale(0);
+  border: 2px solid rgb(255, 127, 37);;
+  border-radius: 2px;
+  box-shadow: inset 0.70rem 0.70rem rgb(249, 115, 22);
+
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
