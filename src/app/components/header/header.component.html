@@ -82,7 +82,10 @@
         <div>
           <i class="fa-solid fa-heart fa-lg"></i>
         </div>
-        <div>
+        <div class="relative">
+          <div *ngIf="productservice.cart && productservice.cart[0].pdids.length>0"
+               class="absolute -top-1 -right-1 bg-orange-500 rounded-full text-xs w-4 h-4 grid place-items-center">{{productservice.cart[0].pdids.length}}
+          </div>
           <i class="fa-solid fa-cart-shopping fa-lg"></i>
         </div>
       </div>
@@ -183,9 +186,15 @@
             Favorilerim
           </div>
           <a routerLink="/cart"
-            class="flex items-center gap-[4px] cursor-pointer text-sm hover:text-orange-400"
+             class="flex items-center gap-[4px] cursor-pointer text-sm hover:text-orange-400"
+
           >
-            <mat-icon class="duration-200 scale-[0.8]">shopping_cart</mat-icon>
+            <div class="relative">
+              <div *ngIf="productservice.cart && productservice.cart[0].pdids.length>0"
+                   class="absolute z-20 -top-1 scale-[0.9] text-white -right-1 bg-orange-500 rounded-full text-xs w-4 h-4 grid place-items-center">{{productservice.cart[0].pdids.length}}
+              </div>
+              <mat-icon class="duration-200 scale-[0.8]">shopping_cart</mat-icon>
+            </div>
             Sepetim
           </a>
         </div>

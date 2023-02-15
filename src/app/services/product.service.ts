@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import {Injectable} from '@angular/core';
+import {Firestore} from '@angular/fire/firestore';
 import {
   addDoc,
   collection,
@@ -12,13 +12,13 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { Product } from '../interfaces/product';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
-import { AuthserviceService } from './authservice.service';
-import { Favorites } from '../interfaces/favorites';
+import {Product} from '../interfaces/product';
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
+import {AuthserviceService} from './authservice.service';
+import {Favorites} from '../interfaces/favorites';
 import * as $ from 'jquery';
-import { Cart } from '../interfaces/cart';
+import {Cart} from '../interfaces/cart';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ export class ProductService {
   favorites!: Favorites[];
   cart!: Cart[];
   brandfilter: string = '';
-  productsHere: any[] = [];
+  productsHere: Product[] = [];
 
   constructor(
     public firestore: Firestore,
@@ -166,7 +166,6 @@ export class ProductService {
   }
 
   async toggleFavoriteProducts(pid: string): Promise<void> {
-    console.log(this.favorites);
     let favoriteRef = doc(this.firestore, 'favorites', this.favorites[0].id);
 
     if (this.favorites[0].pids.includes(pid)) {
@@ -175,7 +174,6 @@ export class ProductService {
           return letter != pid;
         }
       );
-      console.log(this.favorites[0].pids);
     } else {
       this.favorites[0].pids.push(pid);
     }
@@ -195,9 +193,38 @@ export class ProductService {
       collection(this.firestore, 'cart'),
       where('uid', '==', this.authservice.user?.uid)
     );
+
     return onSnapshot(cart_q, (snapshot: any) => {
       this.cart = snapshot.docs.map((data: { data(): Cart; id: string }) => {
-        return { ...data.data(), id: data.id };
+        let arrSnap: Product[] = []
+        data.data().pdids.forEach((id: string) => {
+          let productRef = doc(this.firestore, 'products', id)
+          getDoc(productRef).then((data: any) => {
+            let pr = arrSnap.find((el: Product) => {
+              return el.id == data.id;
+            });
+            if (pr == undefined) {
+              arrSnap.push({
+                ...data.data(),
+                id: data.id,
+                count: 1,
+              });
+            } else {
+              let proudctLocal: Product | undefined = arrSnap.find(
+                (el: Product) => {
+                  return el.id == data.id;
+                }
+              );
+              if (proudctLocal) {
+                proudctLocal.count! += 1;
+                proudctLocal.price! =
+                  proudctLocal?.count! * proudctLocal?.price;
+              }
+            }
+            this.productsHere = arrSnap;
+          })
+        })
+        return {...data.data(), id: data.id};
       });
     });
   }
@@ -247,49 +274,51 @@ export class ProductService {
       });
   }
 
-  async constructProductsOfCart(): Promise<Product[]> {
-    await this.getCart()
-      .then(() => {
-        setTimeout(() => {
-          this.cart[0].pdids.forEach((pdid: string) => {
-            const productRef = doc(this.firestore, 'products', pdid);
-            getDoc(productRef)
-              .then((data: any) => {
-                let pr = this.productsHere.find((el: Product) => {
-                  return el.id == data.id;
-                });
-                console.log(pr);
-
-                if (pr == undefined) {
-                  this.productsHere.push({
-                    ...data.data(),
-                    id: data.id,
-                    count: 1,
-                  });
-                } else {
-                  let proudctLocal: Product = this.productsHere.find(
-                    (el: Product) => {
-                      return el.id == data.id;
-                    }
-                  );
-                  proudctLocal.count! += 1;
-                  proudctLocal.price! =
-                    proudctLocal?.count! * proudctLocal?.price;
-                }
-              })
-              .catch((err: Error) => {
-                console.log(err);
-              });
-          });
-        }, 800);
-      })
-      .catch((err: Error) => {
-        console.log(err);
-      });
-    return this.productsHere;
+  async addToCart(pid: string): Promise<void> {
+    let cartRef = doc(this.firestore, 'cart', this.cart[0].id)
+    let arr = this.cart[0].pdids
+    arr.push(pid)
+    await updateDoc(cartRef, {uid: this.authservice.user?.uid, pdids: arr})
   }
 
-  removeProductFromCart(): Product[] {
-    return this.productsHere;
+  async removeProductFromCart(id: string): Promise<void> {
+    let cartRef = doc(this.firestore, 'cart', this.cart[0].id);
+    this.productsHere = this.productsHere.filter((el: Product) => {
+      return el.id != id;
+    });
+    let pdids: string[] = [];
+    this.productsHere.forEach((el: Product) => {
+      for (let i = 0; i < el.count!; i++) {
+        pdids.push(el.id);
+      }
+    });
+    let data = {uid: this.authservice.user?.uid, pdids: pdids};
+    await updateDoc(cartRef, data);
+
+  }
+
+  async decreaseProductCount(pid: string): Promise<void> {
+    let cartRef = doc(this.firestore, 'cart', this.cart[0].id);
+    if (this.getCount(this.cart[0].pdids, pid) > 1) {
+      let id = this.cart[0].pdids.indexOf(pid);
+      this.cart[0].pdids.splice(id, 1);
+    }
+    await updateDoc(cartRef, {uid: this.authservice.user?.uid, pdids: this.cart[0].pdids})
+  }
+
+  async increaseProductCount(pid: string): Promise<void> {
+    let cartRef = doc(this.firestore, 'cart', this.cart[0].id);
+    this.cart[0].pdids.push(pid);
+    await updateDoc(cartRef, {uid: this.authservice.user?.uid, pdids: this.cart[0].pdids})
+  }
+
+  getCount(arr: string[], pid: string): number {
+    let count = 0;
+    arr.forEach((el: string) => {
+      if (el == pid) {
+        count++;
+      }
+    })
+    return count;
   }
 }
