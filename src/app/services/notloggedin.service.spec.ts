@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthguardService } from './authguard.service';
+import { NotloggedinService } from './notloggedin.service';
 
-describe('AuthguardService', () => {
-  let service: AuthguardService;
+describe('NotloggedinService', () => {
+  let service: NotloggedinService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthguardService);
+    service = TestBed.inject(NotloggedinService);
   });
 
   it('should be created', () => {

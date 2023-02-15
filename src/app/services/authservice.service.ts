@@ -1,23 +1,11 @@
-import { Injectable } from '@angular/core';
-import {
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  User,
-} from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Firestore, getDocs } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
-import {
-  addDoc,
-  collection,
-  getDoc,
-  doc,
-  query,
-  where,
-  updateDoc,
-} from 'firebase/firestore';
-import { ToastrService } from 'ngx-toastr';
-import { Product } from '../interfaces/product';
+import {Injectable} from '@angular/core';
+import {GithubAuthProvider, GoogleAuthProvider, User,} from '@angular/fire/auth';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import {Firestore} from '@angular/fire/firestore';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {getAuth, sendEmailVerification, sendPasswordResetEmail} from "firebase/auth";
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,8 +14,9 @@ export class AuthserviceService {
     private angularfireauth: AngularFireAuth,
     private router: Router,
     private toastr: ToastrService,
-    public firestore: Firestore
-  ) {}
+    public firestore: Firestore,
+  ) {
+  }
 
   darkMode: string | null = 'false';
 
@@ -45,6 +34,7 @@ export class AuthserviceService {
         localStorage.setItem('user', JSON.stringify(resp.user));
         this.user = JSON.parse(localStorage.getItem('user')!);
         this.router.navigate(['/']);
+        console.log(this.user);
       })
       .catch((err) => {
         this.user = undefined;
@@ -111,26 +101,28 @@ export class AuthserviceService {
       });
   }
 
-  async updateProfile(data: { photoURL: string; username: string }) {
-    //TODO Getting user from firestore
-    let user_q = query(
-      collection(this.firestore, 'users'),
-      where('uid', '==', this.user?.uid)
-    );
-    let getUsers = await getDocs(user_q);
-    let id: string = '';
-    getUsers.forEach((data) => {
-      id = data.id;
-    });
-    let new_data = { displayName: data.username, photoURL: data.photoURL };
+  async verifyEmail(): Promise<void> {
+    const auth = getAuth();
+    if (auth.currentUser) {
+      await sendEmailVerification(auth.currentUser, null)
+        .then(() => {
+          console.log("geldi")
+        });
+    }
+  }
 
-    let userRef = doc(this.firestore, 'users', String(id));
-    await updateDoc(userRef, new_data)
-      .then((data) => {
-        this.toastr.success('Successfully updated your profile 🚀');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async resetPassword(): Promise<void> {
+    const auth = getAuth();
+    if (auth.currentUser && auth.currentUser.email) {
+      await sendPasswordResetEmail(auth, auth.currentUser?.email)
+        .then(() => {
+          console.log("sent reset psw mail")
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
+    }
   }
 }

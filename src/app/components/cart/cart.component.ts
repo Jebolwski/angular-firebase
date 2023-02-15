@@ -13,4 +13,12 @@ export class CartComponent {
   constructor(public productservice: ProductService) {
   }
 
+  get totalCost() {
+    let res: number = 0;
+    this.productservice.productsHere.forEach((el: Product) => {
+      res += el.price;
+    })
+    return res;
+  }
+
 }

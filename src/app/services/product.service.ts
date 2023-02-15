@@ -48,7 +48,7 @@ export class ProductService {
   async getFavoriteProdcuts(): Promise<Unsubscribe> {
     let filtered_q = query(
       collection(this.firestore, 'favorites'),
-      where('uid', '==', this.authservice.user?.uid || 0)
+      where('uid', '==', this.authservice.user?.uid || '0')
     );
 
     return onSnapshot(filtered_q, (snapshot: any) => {
@@ -159,82 +159,9 @@ export class ProductService {
     return onSnapshot(user_q, (snapshot: any) => {
       this.products = snapshot.docs.map(
         (data: { data(): Product; id: string }) => {
-          return { ...data.data(), id: data.id };
+          return {...data.data(), id: data.id};
         }
       );
-    });
-  }
-
-  async toggleFavoriteProducts(pid: string): Promise<void> {
-    let favoriteRef = doc(this.firestore, 'favorites', this.favorites[0].id);
-
-    if (this.favorites[0].pids.includes(pid)) {
-      this.favorites[0].pids = this.favorites[0].pids.filter(
-        (letter: string) => {
-          return letter != pid;
-        }
-      );
-    } else {
-      this.favorites[0].pids.push(pid);
-    }
-    let data = {
-      uid: this.authservice.user?.uid,
-      pids: this.favorites[0].pids,
-    };
-    await updateDoc(favoriteRef, data)
-      .then(() => {})
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  async getCart(): Promise<Unsubscribe> {
-    let cart_q = query(
-      collection(this.firestore, 'cart'),
-      where('uid', '==', this.authservice.user?.uid)
-    );
-
-    return onSnapshot(cart_q, (snapshot: any) => {
-      this.cart = snapshot.docs.map((data: { data(): Cart; id: string }) => {
-        let arrSnap: Product[] = []
-        data.data().pdids.forEach((id: string) => {
-          let productRef = doc(this.firestore, 'products', id)
-          getDoc(productRef).then((data: any) => {
-            let pr = arrSnap.find((el: Product) => {
-              return el.id == data.id;
-            });
-            if (pr == undefined) {
-              arrSnap.push({
-                ...data.data(),
-                id: data.id,
-                count: 1,
-              });
-            } else {
-              let proudctLocal: Product | undefined = arrSnap.find(
-                (el: Product) => {
-                  return el.id == data.id;
-                }
-              );
-              if (proudctLocal) {
-                proudctLocal.count! += 1;
-                proudctLocal.price! =
-                  proudctLocal?.count! * proudctLocal?.price;
-              }
-            }
-            this.productsHere = arrSnap;
-          })
-        })
-        return {...data.data(), id: data.id};
-      });
-    });
-  }
-
-  async getUsersFavorites(): Promise<Unsubscribe> {
-    let user_q = query(collection(this.firestore, ''));
-    return onSnapshot(user_q, (snapshot: any) => {
-      this.products = snapshot.docs.map((data: any) => {
-        return { ...data.data() };
-      });
     });
   }
 
@@ -272,6 +199,79 @@ export class ProductService {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  async toggleFavoriteProducts(pid: string): Promise<void> {
+    let favoriteRef = doc(this.firestore, 'favorites', this.favorites[0].id);
+
+    if (this.favorites[0].pids.includes(pid)) {
+      this.favorites[0].pids = this.favorites[0].pids.filter(
+        (letter: string) => {
+          return letter != pid;
+        }
+      );
+    } else {
+      this.favorites[0].pids.push(pid);
+    }
+    let data = {
+      uid: this.authservice.user?.uid,
+      pids: this.favorites[0].pids,
+    };
+    await updateDoc(favoriteRef, data)
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  async getUsersFavorites(): Promise<Unsubscribe> {
+    let user_q = query(collection(this.firestore, ''));
+    return onSnapshot(user_q, (snapshot: any) => {
+      this.products = snapshot.docs.map((data: any) => {
+        return {...data.data()};
+      });
+    });
+  }
+
+  async getCart(): Promise<Unsubscribe> {
+    let cart_q = query(
+      collection(this.firestore, 'cart'),
+      where('uid', '==', this.authservice.user?.uid)
+    );
+
+    return onSnapshot(cart_q, (snapshot: any) => {
+      this.cart = snapshot.docs.map((data: { data(): Cart; id: string }) => {
+        let arrSnap: Product[] = []
+        data.data().pdids.forEach((id: string) => {
+          let productRef = doc(this.firestore, 'products', id)
+          getDoc(productRef).then((data: any) => {
+            let pr = arrSnap.find((el: Product) => {
+              return el.id == data.id;
+            });
+            if (pr == undefined) {
+              arrSnap.push({
+                ...data.data(),
+                id: data.id,
+                count: 1,
+              });
+            } else {
+              let proudctLocal: Product | undefined = arrSnap.find(
+                (el: Product) => {
+                  return el.id == data.id;
+                }
+              );
+              if (proudctLocal) {
+                proudctLocal.count! += 1;
+                proudctLocal.price =
+                  proudctLocal?.count! * proudctLocal?.price / (proudctLocal.count! - 1);
+              }
+            }
+            this.productsHere = arrSnap;
+          })
+        })
+        return {...data.data(), id: data.id};
+      });
+    });
   }
 
   async addToCart(pid: string): Promise<void> {

@@ -82,12 +82,12 @@
         <div>
           <i class="fa-solid fa-heart fa-lg"></i>
         </div>
-        <div class="relative">
+        <a routerLink="/cart" class="relative">
           <div *ngIf="productservice.cart && productservice.cart[0].pdids.length>0"
                class="absolute -top-1 -right-1 bg-orange-500 rounded-full text-xs w-4 h-4 grid place-items-center">{{productservice.cart[0].pdids.length}}
           </div>
           <i class="fa-solid fa-cart-shopping fa-lg"></i>
-        </div>
+        </a>
       </div>
     </div>
     <!-- Large Screen  -->
@@ -95,8 +95,8 @@
       class="md:flex items-center opacity-70 justify-end gap-4 text-xs hidden"
     >
       <a routerLink="/products">İndirim Kuponlarım</a>
-      <p>Trendyol'da Satış Yap</p>
-      <p>Yardım & Destek</p>
+      <p (click)="service.verifyEmail()">Trendyol'da Satış Yap</p>
+      <p (click)="service.resetPassword()">Yardım & Destek</p>
     </div>
     <div
       class="flex items-center justify-start md:justify-between gap-0 md:gap-8 mt-3"
