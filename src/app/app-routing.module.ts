@@ -8,25 +8,26 @@ import {NotloggedinService as NotLoggedIn} from './services/notloggedin.service'
 import {ProductsComponent} from './components/products/products.component';
 import {ProductDetailComponent} from "./components/product-detail/product-detail.component";
 import {CartComponent} from "./components/cart/cart.component";
+import {FavoritesComponent} from "./components/favorites/favorites.component";
 
 const routes: Routes = [
-  {path: '', component: HomeComponent, title: 'Home • Shopify'},
+  {path: '', component: HomeComponent, title: 'Anasayfa'},
   {
     path: 'signin',
     component: SigninComponent,
-    title: 'Signin • Shopify',
+    title: 'Giriş Yap',
     canActivate: [NotLoggedIn],
   },
   {
     path: 'signup',
     component: SignupComponent,
-    title: 'Signup • Shopify',
+    title: 'Kayıt Ol',
     canActivate: [NotLoggedIn],
   },
   {
     path: 'products',
     component: ProductsComponent,
-    title: 'Products • Shopify',
+    title: 'Ürünler',
   },
   {
     path: 'product/:id',
@@ -36,7 +37,12 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
-    title: 'Cart • Shopify',
+    title: 'Sepetim',
+    canActivate: [LoggedIn],
+  }, {
+    path: 'favorites',
+    component: FavoritesComponent,
+    title: 'Favorilerim',
     canActivate: [LoggedIn],
   },
 ];

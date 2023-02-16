@@ -16,9 +16,12 @@ export class CartComponent {
   get totalCost() {
     let res: number = 0;
     this.productservice.productsHere.forEach((el: Product) => {
-      res += el.price;
+      res += parseFloat(el.price.toString());
     })
-    return res;
+    if (res != 0) {
+      return res
+    }
+    return res.toFixed(2);
   }
 
 }

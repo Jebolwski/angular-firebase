@@ -96,7 +96,6 @@ body {
   padding: 6.6px 26.6px 6.6px 10px;
   transition: 0.3s;
 }
-
 .header-search-input:focus {
   outline: 0;
   border: 2px solid rgb(249 115 22 / var(--tw-text-opacity)) !important;
@@ -133,8 +132,52 @@ input[type="radio"]:checked::before {
   transform: scale(1);
 }
 
+input[type="checkbox"] {
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  transform: scale(0);
+  border: 2px solid rgb(255, 127, 37);;
+  border-radius: 2px;
+  box-shadow: inset 0.70rem 0.70rem rgb(249, 115, 22);
+
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+
 @media screen and (max-width: 768px) {
   .login-div {
     min-height: calc(100vh - 152px);
   }
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+  background: #696969;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #696969;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as $ from 'jquery';
-import { ProductService } from 'src/app/services/product.service';
+import {ProductService} from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-add-product-modal',
@@ -37,6 +37,11 @@ export class AddProductModalComponent {
       Validators.required,
       Validators.maxLength(20),
       Validators.minLength(4),
+    ]),
+    brand: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+      Validators.minLength(3),
     ]),
   });
 

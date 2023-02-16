@@ -15,6 +15,26 @@
       (click)="toggleAddProduct()"
     ></div>
     <div class="flex items-start gap-2 mb-3 mt-5">
+      <i class="fa-solid fa-copyright fa-lg mt-4"></i>
+      <div class="w-full">
+        <input
+          type="text"
+          class="header-search-input focus:border-0 focus:outline-none outline-none border-none rounded-md w-full dark:bg-stone-700 font-light text-sm bg-stone-100 pr-10"
+          placeholder="Ürünün Markası"
+          formControlName="brand"
+        />
+        <app-error-message
+          [form]="productForm"
+          name="brand"
+          name2="Marka"
+          [required]="true"
+          [max]="30"
+          [min]="3"
+        ></app-error-message>
+      </div>
+    </div>
+
+    <div class="flex items-start gap-2 mb-3 mt-5">
       <i class="fa-solid fa-file-signature fa-lg mt-4"></i>
       <div class="w-full">
         <input
@@ -27,6 +47,7 @@
           [form]="productForm"
           name="name"
           name2="Ürün adı"
+          [required]="true"
           [max]="120"
           [min]="10"
         ></app-error-message>
@@ -45,6 +66,7 @@
         <app-error-message
           [form]="productForm"
           name="desc"
+          [required]="true"
           name2="Ürün açıklaması"
           [max]="500"
           [min]="70"
@@ -66,6 +88,7 @@
           [form]="productForm"
           name="price"
           name2="Ürün fiyatı"
+          [required]="true"
           [max]="12"
           [min]="1"
         ></app-error-message>

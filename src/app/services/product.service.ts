@@ -27,6 +27,8 @@ export class ProductService {
   product!: Product;
   products!: Product[];
   favorites!: Favorites[];
+  favoriteProducts!: Product[];
+  favoriteProductsTemp!: Product[];
   cart!: Cart[];
   brandfilter: string = '';
   productsHere: Product[] = [];
@@ -36,7 +38,8 @@ export class ProductService {
     private toastr: ToastrService,
     private router: Router,
     private authservice: AuthserviceService
-  ) {}
+  ) {
+  }
 
   async getAProduct(id: string): Promise<Unsubscribe> {
     const productRef = doc(this.firestore, 'products', id);
@@ -54,7 +57,19 @@ export class ProductService {
     return onSnapshot(filtered_q, (snapshot: any) => {
       this.favorites = snapshot.docs.map(
         (data: { data(): Favorites; id: string }) => {
-          return { ...data.data(), id: data.id };
+          let arrSnap: any[] = []
+          data.data().pids.forEach((id: string) => {
+            let productRef = doc(this.firestore, 'products', id)
+            getDoc(productRef).then((data: any) => {
+              arrSnap.push({
+                ...data.data(),
+                id: data.id,
+              })
+              this.favoriteProducts = arrSnap;
+              this.favoriteProductsTemp = arrSnap;
+            })
+          })
+          return {...data.data(), id: data.id};
         }
       );
     });
@@ -76,26 +91,20 @@ export class ProductService {
     lower_bound = Number.isNaN(lower_bound) ? 0 : lower_bound;
     upper_bound = Number.isNaN(upper_bound) ? Infinity : upper_bound;
 
-    let user_q = query(collection(this.firestore, 'products'));
-    if (this.brandfilter.length > 0) {
-      user_q = query(
-        collection(this.firestore, 'products'),
-        where('price', '<=', upper_bound),
-        where('price', '>=', lower_bound),
-        where('brand', '==', this.brandfilter)
-      );
-    } else {
-      user_q = query(
-        collection(this.firestore, 'products'),
-        where('price', '<=', upper_bound),
-        where('price', '>=', lower_bound)
-      );
-    }
-
+    let user_q = query(collection(this.firestore, 'products')) ? query(
+      collection(this.firestore, 'products'),
+      where('price', '<=', upper_bound),
+      where('price', '>=', lower_bound),
+      where('brand', '==', this.brandfilter)
+    ) : query(
+      collection(this.firestore, 'products'),
+      where('price', '<=', upper_bound),
+      where('price', '>=', lower_bound)
+    );
     const unsubscribeProducts = onSnapshot(user_q, (snapshot: any) => {
       this.products = snapshot.docs.map(
         (data: { data(): Product; id: string }) => {
-          return { ...data.data(), id: data.id };
+          return {...data.data(), id: data.id};
         }
       );
     });
@@ -125,30 +134,24 @@ export class ProductService {
     lower_bound = Number.isNaN(lower_bound) ? 0 : lower_bound;
     upper_bound = Number.isNaN(upper_bound) ? Infinity : upper_bound;
     //! ---------------------
-
     //! Kategori
-
     //! ---------------------
-    let user_q = query(collection(this.firestore, 'products'));
-    if (this.brandfilter.length > 0) {
-      user_q = query(
-        collection(this.firestore, 'products'),
-        where('price', '<=', upper_bound),
-        where('price', '>=', lower_bound),
-        where('brand', '==', this.brandfilter)
-      );
-    } else {
-      user_q = query(
-        collection(this.firestore, 'products'),
-        where('price', '<=', upper_bound),
-        where('price', '>=', lower_bound)
-      );
-    }
+    let user_q = this.brandfilter.length > 0 ? query(
+      collection(this.firestore, 'products'),
+      where('price', '<=', upper_bound),
+      where('price', '>=', lower_bound),
+      where('brand', '==', this.brandfilter)
+    ) : query(
+      collection(this.firestore, 'products'),
+      where('price', '<=', upper_bound),
+      where('price', '>=', lower_bound)
+    )
+
 
     return onSnapshot(user_q, (snapshot: any) => {
       this.products = snapshot.docs.map(
         (data: { data(): Product; id: string }) => {
-          return { ...data.data(), id: data.id };
+          return {...data.data(), id: data.id};
         }
       );
     });
@@ -234,6 +237,8 @@ export class ProductService {
   }
 
   async getCart(): Promise<Unsubscribe> {
+    await this.getFavoriteProdcuts();
+
     let cart_q = query(
       collection(this.firestore, 'cart'),
       where('uid', '==', this.authservice.user?.uid)
@@ -266,6 +271,7 @@ export class ProductService {
                   proudctLocal?.count! * proudctLocal?.price / (proudctLocal.count! - 1);
               }
             }
+            arrSnap = arrSnap.sort(this.GetSortOrder("name"));
             this.productsHere = arrSnap;
           })
         })
@@ -312,6 +318,16 @@ export class ProductService {
     await updateDoc(cartRef, {uid: this.authservice.user?.uid, pdids: this.cart[0].pdids})
   }
 
+  filterFavoriteProducts(name: string): void {
+    if (name == '') {
+      this.favoriteProducts = this.favoriteProductsTemp
+    } else {
+      this.favoriteProducts = this.favoriteProductsTemp.filter((product) => {
+        return product.name.includes(name)
+      })
+    }
+  }
+
   getCount(arr: string[], pid: string): number {
     let count = 0;
     arr.forEach((el: string) => {
@@ -320,5 +336,16 @@ export class ProductService {
       }
     })
     return count;
+  }
+
+  GetSortOrder(prop: any) {
+    return function (a: any, b: any) {
+      if (a[prop] > b[prop]) {
+        return 1;
+      } else if (a[prop] < b[prop]) {
+        return -1;
+      }
+      return 0;
+    }
   }
 }

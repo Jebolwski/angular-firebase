@@ -23,7 +23,6 @@
   </div>
 
   <a [routerLink]="'/product/'+product.id" class="grid place-items-center mb-3 h-48">
-
     <img
       *ngIf="product.photos"
       [src]="product.photos[0]"
@@ -38,8 +37,9 @@
     />
   </a>
 
-  <a [routerLink]="'/product/'+product.id" *ngIf="product.name.length > 58">{{ product.name | slice : 0 : 58 }}...</a>
-  <a [routerLink]="'/product/'+product.id" *ngIf="product.name.length <= 58">{{ product.name }}</a>
+  <a [routerLink]="'/product/'+product.id"
+     *ngIf="product.name && product.name.length > 58">{{ product.name | slice : 0 : 58 }}...</a>
+  <a [routerLink]="'/product/'+product.id" *ngIf="product.name && product.name.length <= 58">{{ product.name }}</a>
   <a [routerLink]="'/product/'+product.id" class="flex items-center -ml-9 justify-start gap-[4px] scale-[0.7]">
     <i class="fa-solid fa-star text-yellow-400"></i>
     <i class="fa-solid fa-star text-yellow-400"></i>

@@ -29,6 +29,7 @@ import { AddProductModalComponent } from './components/add-product-modal/add-pro
 import { SwiperModule } from 'swiper/angular';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CartComponent } from './components/cart/cart.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { CartComponent } from './components/cart/cart.component';
     ProductDetailComponent,
     AddProductModalComponent,
     CartComponent,
+    FavoritesComponent,
   ],
   imports: [
     BrowserModule,
