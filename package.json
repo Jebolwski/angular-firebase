@@ -30,6 +30,7 @@
     "ngx-lottie": "^10.0.0",
     "ngx-owl-carousel-o": "^15.0.0",
     "ngx-toastr": "^16.0.2",
+    "notyf": "^3.10.0",
     "rxjs": "~7.5.0",
     "swiper": "^8.4.6",
     "tslib": "^2.3.0",

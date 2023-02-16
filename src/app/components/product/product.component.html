@@ -1,5 +1,5 @@
 <div
-  class="rounded-sm block relative p-3 min-w-[220px] min-h-[310px] max-w-[232px] border border-white hover:border-stone-200 dark:border-stone-700 hover:shadow-md duration-300 cursor-pointer dark:bg-gradient-to-br bg-white dark:from-stone-700 dark:to-stone-800 mx-8"
+  class="rounded-sm block relative p-3 min-w-[220px] min-h-[362px] max-w-[232px] border border-white hover:border-stone-200 dark:border-stone-700 hover:shadow-md duration-300 cursor-pointer dark:bg-gradient-to-br bg-white dark:from-stone-700 dark:to-stone-800 mx-8"
 >
   <div
     class="absolute right-4 top-2 bg-white shadow-md w-7 h-7 grid place-items-center rounded-full dark:bg-stone-700 z-30"
@@ -23,7 +23,6 @@
   </div>
 
   <a [routerLink]="'/product/'+product.id" class="grid place-items-center mb-3 h-48">
-
     <img
       *ngIf="product.photos"
       [src]="product.photos[0]"
@@ -38,8 +37,9 @@
     />
   </a>
 
-  <a [routerLink]="'/product/'+product.id" *ngIf="product.name.length > 58">{{ product.name | slice : 0 : 58 }}...</a>
-  <a [routerLink]="'/product/'+product.id" *ngIf="product.name.length <= 58">{{ product.name }}</a>
+  <a [routerLink]="'/product/'+product.id"
+     *ngIf="product.name && product.name.length > 58">{{ product.name | slice : 0 : 58 }}...</a>
+  <a [routerLink]="'/product/'+product.id" *ngIf="product.name && product.name.length <= 58">{{ product.name }}</a>
   <a [routerLink]="'/product/'+product.id" class="flex items-center -ml-9 justify-start gap-[4px] scale-[0.7]">
     <i class="fa-solid fa-star text-yellow-400"></i>
     <i class="fa-solid fa-star text-yellow-400"></i>

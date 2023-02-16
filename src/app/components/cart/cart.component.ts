@@ -18,7 +18,10 @@ export class CartComponent {
     this.productservice.productsHere.forEach((el: Product) => {
       res += el.price;
     })
-    return res;
+    if (res != 0) {
+      return res
+    }
+    return res.toFixed(2);
   }
 
 }

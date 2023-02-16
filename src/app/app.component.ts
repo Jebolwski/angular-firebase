@@ -30,5 +30,6 @@ export class AppComponent implements OnInit {
     let theme: string | null = localStorage.getItem('theme');
     this.authservice.toggleDarkMode(theme);
     await this.productservice.getCart();
+    await this.productservice.getFavoriteProdcuts();
   }
 }

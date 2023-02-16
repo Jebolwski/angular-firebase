@@ -1,34 +1,36 @@
-import { NgModule, isDevMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { MatIconModule } from '@angular/material/icon';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { SigninComponent } from './components/signin/signin.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { HeaderComponent } from './components/header/header.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from '@angular/fire/compat';
-import { HomeComponent } from './components/home/home.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { SignupComponent } from './components/signup/signup.component';
-import { ToastrModule } from 'ngx-toastr';
-import { ErrorMessageComponent } from './components/error-message/error-message.component';
-import { UpdateProfileComponent } from './update-profile/update-profile.component';
-import { ProductsComponent } from './components/products/products.component';
-import { ProductComponent } from './components/product/product.component';
-import { NgImageSliderModule } from 'ng-image-slider';
-import { CarouselModule } from 'ngx-owl-carousel-o';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-import { AddProductModalComponent } from './components/add-product-modal/add-product-modal.component';
-import { SwiperModule } from 'swiper/angular';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { CartComponent } from './components/cart/cart.component';
+import {isDevMode, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {MatIconModule} from '@angular/material/icon';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {environment} from '../environments/environment';
+import {getAuth, provideAuth} from '@angular/fire/auth';
+import {getFirestore, provideFirestore} from '@angular/fire/firestore';
+import {SigninComponent} from './components/signin/signin.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {HeaderComponent} from './components/header/header.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {AngularFireModule} from '@angular/fire/compat';
+import {HomeComponent} from './components/home/home.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {SignupComponent} from './components/signup/signup.component';
+import {ToastrModule} from 'ngx-toastr';
+import {ErrorMessageComponent} from './components/error-message/error-message.component';
+import {UpdateProfileComponent} from './update-profile/update-profile.component';
+import {ProductsComponent} from './components/products/products.component';
+import {ProductComponent} from './components/product/product.component';
+import {NgImageSliderModule} from 'ng-image-slider';
+import {CarouselModule} from 'ngx-owl-carousel-o';
+import {ProductDetailComponent} from './components/product-detail/product-detail.component';
+import {AddProductModalComponent} from './components/add-product-modal/add-product-modal.component';
+import {SwiperModule} from 'swiper/angular';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {CartComponent} from './components/cart/cart.component';
+import {FavoritesComponent} from './components/favorites/favorites.component';
+import {UserInfoComponent} from './components/user-info/user-info.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { CartComponent } from './components/cart/cart.component';
     ProductDetailComponent,
     AddProductModalComponent,
     CartComponent,
+    FavoritesComponent,
+    UserInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +73,7 @@ import { CartComponent } from './components/cart/cart.component';
       closeButton: true,
       progressBar: true,
       easing: '300',
+      newestOnTop: true,
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),

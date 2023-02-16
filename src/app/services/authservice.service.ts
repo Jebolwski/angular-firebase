@@ -3,8 +3,8 @@ import {GithubAuthProvider, GoogleAuthProvider, User,} from '@angular/fire/auth'
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {Firestore} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
 import {getAuth, sendEmailVerification, sendPasswordResetEmail} from "firebase/auth";
+import {Notyf} from "notyf";
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +13,13 @@ export class AuthserviceService {
   constructor(
     private angularfireauth: AngularFireAuth,
     private router: Router,
-    private toastr: ToastrService,
     public firestore: Firestore,
   ) {
   }
 
   darkMode: string | null = 'false';
+
+  notyf: Notyf = new Notyf();
 
   user: User | undefined | null = localStorage.getItem('user')
     ? JSON.parse(localStorage.getItem('user')!)
@@ -50,7 +51,7 @@ export class AuthserviceService {
         localStorage.setItem('user', JSON.stringify(resp.user));
         this.user = JSON.parse(localStorage.getItem('user')!);
         this.router.navigate(['/']);
-        this.toastr.success('Successfully signed in 🦄');
+        this.notyf.success('Successfully signed in 🦄');
       })
       .catch((err) => {
         console.log(err);
@@ -65,7 +66,7 @@ export class AuthserviceService {
   signUp(data: { email: string; password: string; username: string }) {
     this.angularfireauth
       .createUserWithEmailAndPassword(data.email, data.password)
-      .then((resp) => {
+      .then(() => {
         this.router.navigate(['/signin']);
       })
       .catch((err) => {
@@ -76,11 +77,11 @@ export class AuthserviceService {
   async signOut(): Promise<any> {
     this.angularfireauth
       .signOut()
-      .then((resp) => {
+      .then(() => {
         localStorage.removeItem('user');
         this.user = undefined!;
         this.router.navigate(['/']);
-        this.toastr.success('Successfully signed out 🚀');
+        this.notyf.success('Successfully signed out 🚀');
       })
       .catch((err) => {
         console.log(err);
@@ -94,7 +95,7 @@ export class AuthserviceService {
         localStorage.setItem('user', JSON.stringify(resp.user));
         this.user = JSON.parse(localStorage.getItem('user')!);
         this.router.navigate(['/']);
-        this.toastr.success('Successfully signed in 🦄');
+        this.notyf.success('Successfully signed in 🦄');
       })
       .catch((err) => {
         console.log(err);
@@ -125,4 +126,7 @@ export class AuthserviceService {
         });
     }
   }
+
 }
+
+

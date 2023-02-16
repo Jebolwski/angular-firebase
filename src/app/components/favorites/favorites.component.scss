@@ -1,0 +1,28 @@
+.filters::-webkit-scrollbar {
+  width: 5px;
+  background-color: #f97416;
+}
+
+.filters::-webkit-scrollbar-thumb {
+  background-color: rgb(185, 185, 185);
+}
+
+.filters {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.mobile-filters::-webkit-scrollbar {
+  width: 5px;
+  background-color: #f97416;
+}
+
+.mobile-filters::-webkit-scrollbar-thumb {
+  background-color: rgb(185, 185, 185);
+}
+
+.mobile-filters {
+  top: 0;
+  z-index: 30;
+}

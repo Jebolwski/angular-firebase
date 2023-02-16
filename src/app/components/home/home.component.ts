@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { ProductService } from 'src/app/services/product.service';
+import {Component} from '@angular/core';
+import {OwlOptions} from 'ngx-owl-carousel-o';
+import {ProductService} from 'src/app/services/product.service';
+import {Router} from "@angular/router";
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(public productservice: ProductService) {}
+  constructor(public productservice: ProductService, public router: Router) {
+  }
 
   highlightsOptions: OwlOptions = {
     loop: true,
@@ -62,4 +65,10 @@ export class HomeComponent {
       },
     },
   };
+
+  async goToBrand(brand: string) {
+    await this.productservice.getFilteredProdcutsLarge(brand);
+    await this.productservice.getFilteredProdcutsMobile(brand);
+    await this.router.navigate(['/products']);
+  }
 }

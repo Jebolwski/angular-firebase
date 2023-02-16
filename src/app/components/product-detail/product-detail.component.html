@@ -5,31 +5,46 @@
     <div class="flex justify-center">
 
     <div class="flex items-start gap-5 mt-5">
-<!--      Fotoğraf-->
+      <!--      Fotoğraf-->
       <swiper
-          [config]="config"
-          *ngIf="productService.product"
-          class="w-60 h-auto grid bg-white text-xs font-medium border border-stone-200 rounded-md"
+        [config]="config"
+        *ngIf="productService.product.photos && productService.product.photos.length>0"
+        class="w-60 h-auto grid bg-white text-xs font-medium border border-stone-200 rounded-md"
+      >
+        <ng-template
+          *ngFor="let photo of productService.product.photos"
+          swiperSlide
         >
-          <ng-template
-            *ngFor="let photo of productService.product.photos"
-            swiperSlide
-          >
-              <img [src]="photo" class="w-60" [alt]="productService.product.brand">
-          </ng-template>
-        </swiper>
+          <img [src]="photo" class="w-60"
+               [alt]="productService.product.brand">
+        </ng-template>
+      </swiper>
+      <swiper
+        [config]="config"
+        *ngIf="!(productService.product.photos && productService.product.photos.length>0)"
+        class="w-60 h-auto grid bg-white text-xs font-medium border border-stone-200 rounded-md"
+      >
+        <ng-template
+          *ngFor="let photo of productService.product.photos"
+          swiperSlide
+        >
+          <img src="https://i.pinimg.com/originals/4a/63/97/4a6397987a4d783792b0b9bccbb67edd.png" class="w-60"
+               *ngIf="!(productService.product.photos && productService.product.photos.length>0)"
+               [alt]="productService.product.brand">
+        </ng-template>
+      </swiper>
       <div>
         <h3 class="text-lg" *ngIf="productService.product">{{productService.product.name}}</h3>
         <p class="text-sm">Satıcı:<span class="text-blue-400 cursor-pointer">Fenerbahçe</span></p>
         <div class="flex items-center gap-2 mt-3">
-<!--          Yıldızlar-->
+          <!--          Yıldızlar-->
           <div class="flex items-center">
-          <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
-          <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
-          <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
-          <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
-          <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
-        </div>
+            <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
+            <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
+            <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
+            <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
+            <i class="fa-solid fa-star text-yellow-400 scale-[0.8]"></i>
+          </div>
 <!--          Değerlendirme-->
           <p class="hover:text-orange-500 hover:underline text-[13px] cursor-pointer">793 Değerlendirme </p>
           <img src="https://cdn.dsmcdn.com/mobile/reviewrating/kamera-emoji6x.png" alt="Image" class="w-4 cursor-pointer">
@@ -52,9 +67,9 @@
             class="border border-stone-200   text-stone-500 dark:text-stone-50 rounded-md p-2 hover:text-orange-500"
             (click)="productService.toggleFavoriteProducts(productService.product.id)" matTooltip="Favorilere Ekle">
             <i class="fa-regular fa-heart fa-lg hover:text-white text-orange-500"
-               *ngIf="productService.favorites[0].pids.includes(productService.product.id)"></i>
+               *ngIf="productService.favorites && productService.favorites[0].pids.includes(productService.product.id)"></i>
             <i class="fa-regular fa-heart fa-lg hover:text-orange-500"
-               *ngIf="!productService.favorites[0].pids.includes(productService.product.id)"></i>
+               *ngIf="!(productService.favorites && productService.favorites[0].pids.includes(productService.product.id))"></i>
           </button>
         </div>
       </div>
