@@ -8,7 +8,7 @@
       <!--      Fotoğraf-->
       <swiper
         [config]="config"
-        *ngIf="productService.product.photos && productService.product.photos.length>0"
+        *ngIf="productService.product && productService.product.photos && productService.product.photos.length>0"
         class="w-60 h-auto grid bg-white text-xs font-medium border border-stone-200 rounded-md"
       >
         <ng-template
@@ -19,20 +19,9 @@
                [alt]="productService.product.brand">
         </ng-template>
       </swiper>
-      <swiper
-        [config]="config"
-        *ngIf="!(productService.product.photos && productService.product.photos.length>0)"
-        class="w-60 h-auto grid bg-white text-xs font-medium border border-stone-200 rounded-md"
-      >
-        <ng-template
-          *ngFor="let photo of productService.product.photos"
-          swiperSlide
-        >
-          <img src="https://i.pinimg.com/originals/4a/63/97/4a6397987a4d783792b0b9bccbb67edd.png" class="w-60"
-               *ngIf="!(productService.product.photos && productService.product.photos.length>0)"
-               [alt]="productService.product.brand">
-        </ng-template>
-      </swiper>
+      <img src="https://i.pinimg.com/originals/4a/63/97/4a6397987a4d783792b0b9bccbb67edd.png" class="w-60"
+           *ngIf="!(productService.product && productService.product.photos && productService.product.photos.length>0)"
+           alt="Ürün">
       <div>
         <h3 class="text-lg" *ngIf="productService.product">{{productService.product.name}}</h3>
         <p class="text-sm">Satıcı:<span class="text-blue-400 cursor-pointer">Fenerbahçe</span></p>

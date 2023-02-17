@@ -58,13 +58,17 @@ body {
 
 .fading-background-2 {
   background: linear-gradient(
-    -45deg,
-    rgb(255, 255, 255),
-    rgb(240, 240, 240),
-    rgb(224, 224, 224)
+      -45deg,
+      rgb(255, 255, 255),
+      rgb(240, 240, 240),
+      rgb(224, 224, 224)
   );
   background-size: 400% 400%;
   animation: fadeIt 5s ease-in-out infinite;
+}
+
+.swiper-button-prev, .swiper-button-next {
+  color: #a2a2a2;
 }
 
 @keyframes spin {
