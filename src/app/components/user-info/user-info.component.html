@@ -1,0 +1,41 @@
+<div class="bg-white p-3 flex min-h-screen dark:bg-stone-800 text-black dark:text-white">
+  <div class="container flex justify-center">
+    <div>
+      <h2 class="text-xl">Hesabım</h2>
+      <div class="flex items-center gap-2 my-2">
+        <i class="fa-solid fa-box"></i>
+        <p>Siparişlerim</p>
+      </div>
+      <div class="flex items-center gap-2 my-2">
+        <i class="fa-solid fa-comment-dots"></i>
+        <p>Değerlendirmelerim</p>
+      </div>
+      <div class="flex items-center gap-2 my-2">
+        <i class="fa-solid fa-envelope"></i>
+        <p>Satıcı Mesajlarım</p>
+      </div>
+      <div class="flex items-center gap-2 my-2">
+        <i class="fa-solid fa-rotate-right"></i>
+        <p>Tekrar Satın Al</p>
+      </div>
+      <div class="flex items-center gap-2 my-2">
+        <i class="fa-solid fa-wallet"></i>
+        <p>Trendyol Cüzdanım</p>
+      </div>
+      <div class="flex items-center gap-2 my-2">
+        <i class="fa-solid fa-shop"></i>
+        <p>Takip Ettiğim Mağzalar</p>
+      </div>
+      <div class="flex items-center gap-2 my-2">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <p>Önceden Gezdiklerim</p>
+      </div>
+    </div>
+    <div>
+      <button class="bg-orange-500 text-white hover:bg-orange-400 duration-300 p-1 rounded-md text-lg"
+              (click)="authservice.resetPassword()">Şifreyi Değiştir
+      </button>
+    </div>
+  </div>
+</div>
+
