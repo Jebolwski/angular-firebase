@@ -48,13 +48,21 @@ export class AddProductModalComponent {
   get name() {
     return this.productForm.get('name');
   }
+
   get price() {
     return this.productForm.get('price');
   }
+
   get desc() {
     return this.productForm.get('desc');
   }
+
   get category() {
     return this.productForm.get('category');
+  }
+
+  addFile(): void {
+    let div: string = "<input type=\"file\" id=\"fileid\" class=\"block mb-3\" name=\"file\" accept=\".jpeg,.jpg,.png,.svg\"/>"
+    $(".product-files").append(div);
   }
 }

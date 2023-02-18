@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Firestore} from '@angular/fire/firestore';
+import {addDoc, Firestore} from '@angular/fire/firestore';
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -20,6 +19,8 @@ import {Favorites} from '../interfaces/favorites';
 import * as $ from 'jquery';
 import {Cart} from '../interfaces/cart';
 import {Notyf} from "notyf";
+import {AngularFireStorage} from '@angular/fire/compat/storage';
+import slugify from "slugify";
 
 @Injectable({
   providedIn: 'root',
@@ -35,12 +36,15 @@ export class ProductService {
   productsHere: Product[] = [];
 
   notyf: Notyf = new Notyf();
+  uploadPercent!: any;
+  downloadURL!: any;
 
   constructor(
     public firestore: Firestore,
     private toastr: ToastrService,
     private router: Router,
-    private authservice: AuthserviceService
+    private authservice: AuthserviceService,
+    private storage: AngularFireStorage,
   ) {
   }
 
@@ -172,14 +176,26 @@ export class ProductService {
     });
   }
 
-  async addProduct(data: Product) {
+  async addProduct(data: Product, event: any) {
+    let photos_arr: any[] = [];
     let productRef = collection(this.firestore, 'products');
+    for (const element of event.target.querySelectorAll("#fileid")) {
+      const file: File | undefined = element.files[0];
+      if (file != undefined) {
+        const filePath = 'products/' + slugify(data.name.slice(0, 40)) + '/' + slugify(file.name);
+        const task = this.storage.upload(filePath, file);
+        (await task).ref.getDownloadURL().then((url: any) => {
+          photos_arr.push(url)
+        });
+      }
+    }
+    data['photos'] = photos_arr;
     await addDoc(productRef, data)
       .then(() => {
         this.notyf.success('Successfully added product ✨');
         this.router.navigate(['/']);
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         console.log(err);
       });
   }

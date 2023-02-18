@@ -31,7 +31,7 @@ import {ServiceWorkerModule} from '@angular/service-worker';
 import {CartComponent} from './components/cart/cart.component';
 import {FavoritesComponent} from './components/favorites/favorites.component';
 import {UserInfoComponent} from './components/user-info/user-info.component';
-
+import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [
@@ -56,6 +56,7 @@ import {UserInfoComponent} from './components/user-info/user-info.component';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    AngularFireStorageModule,
     BrowserAnimationsModule,
     SwiperModule,
     MatIconModule,

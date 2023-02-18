@@ -1,12 +1,12 @@
 <div
-  class="dark:bg-stone-900 p-5 pt-6 border dark:border-stone-600 rounded-lg relative bg-white dark:text-white text-black"
+  class="dark:bg-stone-900 p-5 pt-6 border h-[90vh] overflow-y-scroll dark:border-stone-600 rounded-lg relative bg-white dark:text-white text-black"
 >
   <form
     [formGroup]="productForm"
     (submit)="
       desc?.errors || price?.errors || name?.errors
         ? null
-        : productservice.addProduct(productForm.value);
+        : productservice.addProduct(productForm.value,$event);
       productForm.reset()
     "
   >
@@ -95,8 +95,17 @@
       </div>
     </div>
 
+    <div class="flex items-start gap-2 mt-3 mb-5">
+      <i class="fa-solid fa-image fa-lg mt-3"></i>
+      <div class="product-files">
+        <input type="file" id="fileid" class="block mb-3" name="file" accept=".jpeg,.jpg,.png,.svg"
+        />
+      </div>
+      <i class="fa-solid fa-plus mt-3 cursor-pointer fa-lg hover:rotate-90 duration-300" (click)="addFile()"></i>
+    </div>
+
     <button
-      class="dark:bg-stone-800 border-2 dark:text-white ml-8 border-orange-500 p-1 rounded-md hover:shadow-md hover:bg-orange-500 hover:dark:bg-orange-600 hover:text-white duration-300"
+      class="dark:bg-stone-800 border-2 dark:text-white ml-7 border-orange-500 p-1 rounded-md hover:shadow-md hover:bg-orange-500 hover:dark:bg-orange-600 hover:text-white duration-300"
       [ngClass]="
         desc?.errors || price?.errors || name?.errors
           ? 'opacity-50'

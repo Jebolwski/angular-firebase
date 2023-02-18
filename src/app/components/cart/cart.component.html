@@ -64,7 +64,8 @@
                   </div>
                 </div>
                 <h4 class="text-orange-500 font-medium">{{product.price}}TL</h4>
-                <i (click)="productservice.removeProductFromCart(product.id)" class="fa-regular fa-trash-can"></i>
+                <i (click)="productservice.removeProductFromCart(product.id)"
+                   class="fa-regular fa-trash-can cursor-pointer"></i>
               </div>
               <!--              Small Screen-->
               <div class="flex md:hidden justify-between items-center gap-5 p-2 py-4">
@@ -85,7 +86,8 @@
                       <p class="text-xs opacity-75">Beden : M</p>
                       <p class="text-xs opacity-75">Tahmini Kargoya Teslim: 2 gün sonra</p>
                     </div>
-                    <i (click)="productservice.removeProductFromCart(product.id)" class="fa-regular fa-trash-can"></i>
+                    <i (click)="productservice.removeProductFromCart(product.id)"
+                       class="fa-regular fa-trash-can cursor-pointer"></i>
                   </div>
                   <div class="flex items-center justify-between mt-3">
                     <div class="lg:mx-16 flex items-center">
